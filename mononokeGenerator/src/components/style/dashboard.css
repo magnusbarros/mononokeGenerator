@@ -45,6 +45,9 @@
 .mononoke-card .card-header .card-name {
     float: left;
     margin: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
 }
 
 
@@ -109,7 +112,8 @@
 }
 
 .mononoke-card .card-body-stats {
-    height: 140px;
+    min-height: 140px;
+    margin-bottom: 10px;
 }
 
 .mononoke-card .card-body-stats .card-body-stats-main p {
@@ -130,6 +134,12 @@
     width: 18%;
     text-align: center;
     line-height: 25px;
+}
+
+.mononoke-card .card-body-stats input {
+    width: 80%;
+    float: left;
+    margin: 2px;
 }
 
 .mononoke-card .card-body-data div {
