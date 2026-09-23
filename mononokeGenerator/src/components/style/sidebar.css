@@ -1,0 +1,28 @@
+.sidebar {
+    width: 100px;
+    height: 100vh;
+    margin-left: -8px;
+    margin-top: -8px;
+    position: relative;
+    background-color: lightgray;
+    float: left;
+}
+
+.icon {
+    width: 100px;
+    image-rendering: pixelated;
+}
+
+.sidebar-button {
+    margin-left: 35%;
+    width: 30px;
+    height: 30px;
+}
+
+.sidebar-button p {
+    font-size: 40px;
+    position: relative;
+    top: -51px;
+    left: -4.5px;
+
+}

@@ -1,0 +1,149 @@
+.dashboard {
+    position: relative;
+    float: left;
+    margin: 20px;
+}
+
+.mononoke-card {
+    width: 500px;
+    max-width: 50vh;
+    margin: 10px;
+    border: 3px solid;
+    padding: 3px;
+    font-family: Comfortaa;
+}
+
+.mononoke-card .card-header {
+    background-color: black;
+    color: white;
+    width: 100%;
+    height: 60px;
+    cursor: pointer;
+}
+
+.mononoke-card .card-header .card-header-left {
+    width: 50%;
+}
+
+.mononoke-card .card-header .card-header-right {
+    width: 50%;
+    padding-left: 50%;
+}
+
+.mononoke-card .card-header .card-header-right .card-edit-btn {
+    float: right;
+    height: 100%;
+    padding: 5px;
+    margin: 5px;
+    width: 50px;
+}
+
+.mononoke-card .card-header .card-header-right .card-edit-btn-hidden {
+    display: none;
+}
+
+.mononoke-card .card-header .card-name {
+    float: left;
+    margin: 5px;
+}
+
+
+.mononoke-card .card-header .card-lv-label {
+    float: right;
+    margin: 5px;
+    padding: 10px;
+}
+
+.mononoke-card .card-header .card-lv {
+    float: right;
+    margin: 5px;
+    background-color: white;
+    color: black;
+    text-align: center;
+    width:80px;
+    height: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.mononoke-card .card-header .card-class {
+    float: left;
+    position: absolute;
+    top: 33px;
+    left: 21px;
+    font-size: 18px;
+}
+
+.mononoke-card .card-body {
+    margin: 3px;
+}
+
+.mononoke-card .card-body-hidden {
+    display: none;
+}
+
+.mononoke-card .card-body-info {
+    height: 40px;
+}
+
+.mononoke-card .card-body-info-left {
+    width: 80%;
+}
+
+.mononoke-card .card-body-info-right {
+    width: 20%;
+    float: right;
+    text-align: right;
+}
+
+.mononoke-card .card-body-info-right ul{
+    list-style-type: none;
+    font-size: 15px;
+    margin: 2px;
+}
+
+.mononoke-card .card-body-info p {
+    float: left;
+    margin: 2px;
+    font-size: 15px;
+}
+
+.mononoke-card .card-body-stats {
+    height: 140px;
+}
+
+.mononoke-card .card-body-stats .card-body-stats-main p {
+    float: left;
+    margin: 2px;
+    width: 18%;
+    text-align: center;
+    line-height: 25px;
+}
+
+.mononoke-card .card-body-stats .card-body-stats-main .hp {
+    font-weight: bolder;
+}
+
+.mononoke-card .card-body-stats .card-body-stats-sub p {
+    float: left;
+    margin: 2px;
+    width: 18%;
+    text-align: center;
+    line-height: 25px;
+}
+
+.mononoke-card .card-body-data div {
+    background-color: lightgray;
+    color: black;
+    height: 24px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-bottom: 5px;
+}
+
+.mononoke-card .card-body-data h4 {
+    margin: 3px;
+}
+.mononoke-card .card-body-data p {
+    float: right;
+}
