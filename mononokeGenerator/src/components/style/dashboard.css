@@ -50,6 +50,15 @@
     max-width: 200px;
 }
 
+.mononoke-card .card-header .card-name-input {
+    float: left;
+    margin: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 200px;
+    padding: 2px;
+}
+
 
 .mononoke-card .card-header .card-lv-label {
     float: right;
@@ -63,10 +72,21 @@
     background-color: white;
     color: black;
     text-align: center;
-    width:80px;
+    width: 80px;
     height: 100%;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+.mononoke-card .card-header .card-lv-expand {
+    width: 100px;
+    height: 33px;
+}
+
+.mononoke-card .card-header .card-lv input {
+    width: 30%;
+    margin-bottom: 2px;
+    text-align: center;
 }
 
 .mononoke-card .card-header .card-class {
@@ -86,11 +106,23 @@
 }
 
 .mononoke-card .card-body-info {
-    height: 40px;
+    min-height: 65px;
+    margin-bottom: 10px;
 }
 
 .mononoke-card .card-body-info-left {
     width: 80%;
+    float: left;
+}
+
+.mononoke-card .card-body-info-left label {
+    display: inline-block;
+}
+
+.card-input-new {
+    width: 80px;
+    height: 20px;
+    margin: 2px;
 }
 
 .mononoke-card .card-body-info-right {
@@ -103,6 +135,10 @@
     list-style-type: none;
     font-size: 15px;
     margin: 2px;
+}
+
+.mononoke-card .card-body-info-right ul input {
+    width: 80%;
 }
 
 .mononoke-card .card-body-info p {
