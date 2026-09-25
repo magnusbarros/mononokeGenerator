@@ -50,6 +50,20 @@
     max-width: 200px;
 }
 
+.mononoke-card .card-header .card-type {
+    float: left;
+    position: absolute;
+    top: 43px;
+    margin: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+} 
+
+.mononoke-card .card-header .card-type .card-type-edit {
+    cursor: pointer;
+}
+
 .mononoke-card .card-header .card-name-input {
     float: left;
     margin: 5px;
@@ -106,7 +120,7 @@
 }
 
 .mononoke-card .card-body-info {
-    min-height: 65px;
+    min-height: 75px;
     margin-bottom: 10px;
 }
 
@@ -117,6 +131,36 @@
 
 .mononoke-card .card-body-info-left label {
     display: inline-block;
+}
+
+.mononoke-card .card-body-extra-info {
+    margin: 2px;
+    width: 100%;
+    height: 85px;
+    text-align: center;
+}
+
+.mononoke-card .card-body-extra-info .card-body-infobox{
+    float: left;
+    margin-left: 4%;
+}
+
+.mononoke-card .card-body-extra-info .card-body-infobox .edit {
+    margin-left: -15px !important;
+    cursor: pointer;
+}
+
+.mononoke-card .card-body-extra-info .card-body-infobox .label{
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.mononoke-card .card-body-extra-info .card-body-infobox .info{
+    font-size: 12px;
+    line-height: 2px;
+    margin-bottom: 15px;
+    margin-top: 0;
 }
 
 .card-input-new {
@@ -158,10 +202,7 @@
     width: 18%;
     text-align: center;
     line-height: 25px;
-}
-
-.mononoke-card .card-body-stats .card-body-stats-main .hp {
-    font-weight: bolder;
+    font-weight: bold;
 }
 
 .mononoke-card .card-body-stats .card-body-stats-sub p {
@@ -170,6 +211,7 @@
     width: 18%;
     text-align: center;
     line-height: 25px;
+    font-weight: bold;
 }
 
 .mononoke-card .card-body-stats input {
@@ -192,4 +234,49 @@
 }
 .mononoke-card .card-body-data p {
     float: right;
+}
+
+.card-popup {
+    position: absolute;
+    top: 2;
+    right: -55px;
+    width: 60px;
+    background-color: rgba(0, 0, 0, 0.5);
+    visibility: hidden;
+}
+
+.card-popup.show {
+    visibility: visible;
+}
+
+.card-type-popup {
+    position: absolute;
+    top: 75px;
+    height: 80px;
+    width: 350px;
+    background-color: rgba(0, 0, 0, 0.7);
+    visibility: hidden;
+    overflow-y: scroll;
+}
+
+.card-extra-popup {
+    position: absolute;
+    height: 80px;
+    width: 350px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    text-align: left;
+    top: 185px;
+    left: 80px;
+    visibility: hidden;
+}
+
+.card-type-popup,  label
+.card-extra-popup,  label {
+    white-space: nowrap;
+}
+
+.card-type-popup.show,
+.card-extra-popup.show  {
+    visibility: visible;
 }

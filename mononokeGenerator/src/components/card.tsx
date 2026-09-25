@@ -1,62 +1,60 @@
 import { useState } from 'react'
 import TypeCheckboxes from './typecheckboxes'
 import LevelEdit from './leveledit'
+import TypeRadio from './typeRadio'
+import { EditPencil } from 'iconoir-react'
 
 export default function Card(props: any) {
 
     const defaultTypes = ['Humanoid', 'Beast', 'Insectoid', 'Plant', 'Machine', 'Undead', 'Myth', 'Abomination']
     const defaultWeaknesses = ['Flame', 'Frost', 'Shock', 'Wind', 'Force', 'Radiant', 'Blight', 'Psychic']
-    const defaultSenses = ['Normal', 'Heat', 'Magic', 'Domain']
+    const defaultperception = ['Normal', 'Heat', 'Magic', 'Domain']
     const defaultMovement = ['Walk', 'Fly', 'Swim']
     const defaultCunning = ['Low', 'Typical', 'High', 'Devious']
+    const defaultReaction = ['Friendly', 'Neutral', 'Hostile', 'Mercuria']
 
     const [mononoke, setMononoke] = useState(props.mononoke)
-    
+
     const [isEditing, setIsEditing] = useState(false)
     const [allTypes, setAllTypes] = useState(defaultTypes)
     const [allWeaknesses, setAllWeaknesses] = useState(defaultWeaknesses)
-    const [allSenses, setAllSenses] = useState(defaultSenses)
+    const [allPerception, setAllperception] = useState(defaultperception)
     const [allMovement, setAllMovement] = useState(defaultMovement)
     const [allCunning, setAllCunning] = useState(defaultCunning)
-    
-    mononoke.types.map(type => {
-        if (!allTypes.includes(type)) {
-            setAllTypes([...allTypes, type]);
-        }
-    })
+    const [allReaction, setAllReaction] = useState(defaultReaction)
+    const [speech, isSpeech] = useState(false)
+    const [extraInfo, setExtraInfo] = useState('perception')
 
-    mononoke.weaknesses.map(weakness => {
+    if (!allTypes.includes(mononoke.type)) {
+        setAllTypes([...allTypes, mononoke.type]);
+    }
+
+    mononoke.weaknesses.map((weakness: string) => {
         if (!allWeaknesses.includes(weakness)) {
             setAllWeaknesses([...allWeaknesses, weakness]);
         }
     })
 
-    mononoke.senses.map(sense => {
-        if (!allSenses.includes(sense)) {
-            setAllSenses([...allSenses, sense]);
-        }
-    })
+    if (!allPerception.includes(mononoke.perception)) {
+        setAllperception([...allPerception, mononoke.perception]);
+    }
 
-    mononoke.movement.map(movement => {
+    mononoke.movement.map((movement: string) => {
         if (!allMovement.includes(movement)) {
             setAllMovement([...allMovement, movement]);
         }
     })
 
-    mononoke.cunning.map(cunning => {
-        if (!allCunning.includes(cunning)) {
-            setAllCunning([...allCunning, cunning]);
-        }
-    })
+    if (!allCunning.includes(mononoke.cunning)) {
+        setAllCunning([...allCunning, mononoke.cunning]);
+    }
 
     function hideCard(cardId: string | number) {
-        var cardBody = document.getElementById('card-' + cardId)?.getElementsByClassName('card-body')[0]
-        if (!cardBody?.classList.contains('card-body-hidden') && !isEditing) {
-            cardBody?.classList.add('card-body-hidden')
-            document.getElementById('card-edit-' + cardId)?.classList.add('card-edit-btn-hidden')
-        } else {
-            cardBody?.classList.remove('card-body-hidden')
-            document.getElementById('card-edit-' + cardId)?.classList.remove('card-edit-btn-hidden')
+        if (!isEditing) {
+            var cardBody = document.getElementById('card-' + cardId)?.getElementsByClassName('card-body')[0]
+            cardBody?.classList.toggle('card-body-hidden')
+            document.getElementById('card-edit-' + cardId)?.classList.toggle('card-edit-btn-hidden')
+            document.getElementById('card-edit-btn')?.classList.toggle('card-edit-btn-hidden')
         }
     }
 
@@ -94,7 +92,7 @@ export default function Card(props: any) {
                 currentMononoke.stats[name] = parsedValue;
             }
 
-        } else if (type === 'type' || type === 'weaknesses' || type === 'senses' || type === 'movement' || type === 'cunning') {
+        } else if (type === 'weaknesses' || type === 'movement') {
             if (currentMononoke[type].includes(value)) {
                 currentMononoke[type] = currentMononoke[type].filter((t: string) => t !== value);
             } else {
@@ -103,6 +101,8 @@ export default function Card(props: any) {
                     setAllTypes([...allTypes, value]);
                 }
             }
+        } else if (type === 'speech') {
+            currentMononoke[type] = !currentMononoke[type]
         } else if (type === 'lv') {
             const oldValue = parseInt(currentMononoke[name]);
             const newValue = Number.isNaN(parseInt(value)) ? 0 : parseInt(value);
@@ -123,20 +123,86 @@ export default function Card(props: any) {
         console.log('Saved changes')
     }
 
+    function TypePopup() {
+        return (
+            <div className='card-type-popup' id={'card-type-popup-' + mononoke.id}>
+                <TypeRadio mononoke={mononoke} isEditing={isEditing}
+                    allTypes={allTypes} handleOnChange={handleOnChange}
+                    type='type' />
+            </div>
+        )
+    }
+
+    function ExtraInfoPopup(props: any) {
+
+        var typeRadio = null
+
+        switch (props.type) {
+            case 'perception':
+                typeRadio = allPerception
+                break
+            case 'reaction':
+                typeRadio = allReaction
+                break
+            case 'movement':
+                typeRadio = allMovement
+                break
+            case 'cunning':
+                typeRadio = allCunning
+                break
+            default:
+                typeRadio = allPerception
+        }
+
+        if (props.type === 'movement') {
+            return (
+                <div className='card-extra-popup' id='card-extra-popup'>
+                    <TypeCheckboxes mononoke={mononoke} isEditing={isEditing}
+                        allTypes={typeRadio} handleOnChange={handleOnChange}
+                        type={props.type} />
+                </div>
+            )
+        }
+
+        return (
+            <div className='card-extra-popup' id='card-extra-popup'>
+                <TypeRadio mononoke={mononoke} isEditing={isEditing}
+                    allTypes={typeRadio} handleOnChange={handleOnChange}
+                    type={props.type} />
+            </div>
+        )
+    }
+
     return (
         <div className='mononoke-card' id={'card-' + mononoke.id} key={mononoke.id}>
             <div className='card-header-container'>
                 <div className='card-header' onClick={() => hideCard(mononoke.id)}>
                     {isEditing ?
                         (
-                            <div className='card-header-left'>
-                                <input type='text' name='name' className='card-name-input' defaultValue={mononoke.name} onClick={(e) => e.stopPropagation()} onChange={e => { handleOnChange(e, mononoke.id) }} />
-                            </div>
+                            <>
+                                <div className='card-header-left'>
+                                    <input type='text' name='name' className='card-name-input'
+                                        defaultValue={mononoke.name} onClick={(e) => e.stopPropagation()}
+                                        onChange={e => { handleOnChange(e, mononoke.id) }} />
+                                    <h3 className='card-type card-type-edit'
+                                        onClick={(e) => {
+                                            {
+                                                e.stopPropagation(),
+                                                    document.getElementById("card-type-popup-" + mononoke.id)?.classList.toggle("show")
+                                            }
+                                        }}>
+                                        {mononoke.type}
+                                        <EditPencil height={20} />
+                                    </h3>
+                                </div>
+                                <TypePopup />
+                            </>
                         )
                         :
                         (
                             <div className='card-header-left'>
                                 <h2 className='card-name'>{mononoke.name}</h2>
+                                <h3 className='card-type'>{mononoke.type}</h3>
                             </div>
                         )
                     }
@@ -151,7 +217,7 @@ export default function Card(props: any) {
                     <div className='card-body-info'>
                         <div className='card-body-info-left'>
                             <TypeCheckboxes mononoke={mononoke} isEditing={isEditing}
-                                allTypes={allWeaknesses} handleOnChange={handleOnChange} 
+                                allTypes={allWeaknesses} handleOnChange={handleOnChange}
                                 type='weaknesses' />
                         </div>
                         <div className='card-body-info-right'>
@@ -172,6 +238,58 @@ export default function Card(props: any) {
                                 )}</li>
                             </ul>
                         </div>
+                    </div>
+                    <div className='card-body-extra-info'>
+                        <div className='card-body-infobox'>
+                            <p className={isEditing ? ('label edit') : ('label')}
+                                onClick={() => {
+                                    setExtraInfo('perception'),
+                                        document.getElementById('card-extra-popup')?.classList.toggle('show')
+                                }}>
+                                Perception: {isEditing ? (<EditPencil height={15} width={15} />) : (<></>)}
+                            </p><br />
+                            <p className='info' key={"perception-" + mononoke.perception.trim()}>{mononoke.perception}</p>
+                        </div>
+                        <div className='card-body-infobox'>
+                            <p className={isEditing ? ('label edit') : ('label')}
+                                onClick={() => {
+                                    setExtraInfo('movement'),
+                                        document.getElementById('card-extra-popup')?.classList.toggle('show')
+                                }}>
+                                Movement: {isEditing ? (<EditPencil height={15} width={15} />) : (<></>)}
+                            </p><br />
+                            {mononoke.movement.map((move: string) => (
+                                <p className='info' key={"move-" + move.trim()}>{move}</p>
+                            ))}
+                        </div>
+                        <div className='card-body-infobox'>
+                            <p className={isEditing ? ('label edit') : ('label')}
+                                onClick={() => {
+                                    setExtraInfo('cunning'),
+                                        document.getElementById('card-extra-popup')?.classList.toggle('show')
+                                }}>
+                                Cunning: {isEditing ? (<EditPencil height={15} width={15} />) : (<></>)}
+                            </p><br />
+                            <p className='info' key={"cng-" + mononoke.cunning.trim()}>{mononoke.cunning}</p>
+                        </div>
+                        <div className='card-body-infobox'>
+                            <p className={isEditing ? ('label edit') : ('label')} 
+                                onClick={(e) => {isSpeech(!speech), handleOnChange(e, 'speech')}}>
+                                Speech: {isEditing ? (<EditPencil height={15} width={15} />) : (<></>)}
+                            </p><br />
+                            <p className='info'>{mononoke.speech ? (<>Yes</>) : (<>No</>)}</p>
+                        </div>
+                        <div className='card-body-infobox'
+                            onClick={() => {
+                                setExtraInfo('reaction'),
+                                    document.getElementById('card-extra-popup')?.classList.toggle('show')
+                            }}>
+                            <p className={isEditing ? ('label edit') : ('label')}>
+                                Reaction: {isEditing ? (<EditPencil height={15} width={15} />) : (<></>)}
+                            </p><br />
+                            <p className='info' key={"cng-" + mononoke.reaction.trim()}>{mononoke.reaction}</p>
+                        </div>
+                        <ExtraInfoPopup type={extraInfo} />
                     </div>
                     <div className='card-body-stats'>
                         <div className='card-body-stats-main'>
