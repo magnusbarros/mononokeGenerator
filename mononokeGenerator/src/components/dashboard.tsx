@@ -1,44 +1,62 @@
 import { useState } from 'react'
 import CardList from './cardList'
+import Sidebar from './sidebar';
 
 import './style/dashboard.css'
 
-const placeholder = [
-    { 
-        id: 1, 
-        name: 'Bababoey', 
-        lv: 1, 
-        xp: 10, 
-        type: 'Machine',
-        weaknesses: ['Water', 'Ice'], 
-        size: 2, 
-        ident: 1, 
-        perception: 'Magic',
-        movement: ['Walk', 'Fly'],
-        cunning: 'Uoh', 
-        speech: true,
-        reaction: 'Hostile',
-        stats: { 
-            hp: 220, 
-            guard: 0, 
-            ward: 0, 
-            init: 15, 
-            speed: 7, 
-            acc: 11, 
-            eva: 5, 
-            inv: 0, 
-            res: 14, 
-            chk: 6, 
-            customInit: true, 
-            customSpd: false 
-        } 
-    }
-]
+const placeholder = []
 
 export default function Dashboard() {
+
+    const [mononokeList, setMononokeList] = useState(localStorage.getItem('savedMononoke') !== null ? JSON.parse(localStorage.getItem('savedMononoke')) : placeholder)
+    const [reload, setReload] = useState(false)
+
+    function save(itemToSave: any) {
+        if (mononokeList !== null) {
+            mononokeList.map((stored: any) => {
+                if (stored.id === itemToSave.id) {
+                    stored = itemToSave
+                }
+            })
+            setMononokeList(mononokeList)
+            localStorage.setItem('savedMononoke', JSON.stringify(mononokeList))
+        } else {
+            setMononokeList([itemToSave])
+            localStorage.setItem('savedMononoke', JSON.stringify([itemToSave]))
+        }
+        setReload(true)
+    }
+
+    function remove(itemToRemove: any) {
+        if (mononokeList !== null) {
+            mononokeList.map((stored: any) => {
+                if (stored.id === itemToRemove.id) {
+                    mononokeList.splice(mononokeList.indexOf(itemToRemove), 1)
+                }
+            })
+            setMononokeList(mononokeList)
+            localStorage.setItem('savedMononoke', JSON.stringify(mononokeList))
+        }
+        setReload(true)
+    }
+
     return (
-        <div className="dashboard" id='dashboard'>
-            <CardList defaultList={placeholder} />
+        <div className='dashboard-wrapper'>
+            <Sidebar list={mononokeList} save={save} />
+            <div className="dashboard" id='dashboard'>
+                {
+                    !reload ?
+                        (
+                            <CardList defaultList={mononokeList !== undefined && mononokeList !== null ? mononokeList : placeholder} save={save} remove={remove} />
+                        )
+                        :
+                        (
+                            <>
+                                {setReload(false)}
+                            </>
+                        )
+                }
+            </div>
         </div>
     )
 }

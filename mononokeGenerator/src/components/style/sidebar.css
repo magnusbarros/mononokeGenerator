@@ -3,9 +3,10 @@
     height: 100vh;
     margin-left: -8px;
     margin-top: -8px;
-    position: relative;
+    position: sticky;
+    top: 0;
     background-color: lightgray;
-    float: left;
+    z-index: 2;
 }
 
 .icon {

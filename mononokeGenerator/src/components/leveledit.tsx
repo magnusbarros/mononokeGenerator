@@ -34,7 +34,7 @@ export default function LevelEdit(props: any) {
                     <FloppyDisk height={30} />
                 </button>
                 <button className='card-edit-btn' id={'card-delete-' + mononoke.id}
-                    onClick={(e) => { e.stopPropagation() }}>
+                    onClick={(e) => { e.stopPropagation(), props.handleRemove(mononoke) }}>
                     <Trash height={30} />
                 </button>
             </div>
@@ -44,7 +44,7 @@ export default function LevelEdit(props: any) {
     return (<>
         <Popup />
         <button className='card-edit-btn'
-            id='card-edit-btn'
+            id={'card-edit-btn-' + mononoke.id}
             onClick={(e) => {
                 e.stopPropagation(),
                     document.getElementById("card-popup-" + mononoke.id)?.classList.toggle("show")
