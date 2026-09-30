@@ -5,6 +5,7 @@ import TypeRadio from './typeRadio'
 import LootList from './lootlist'
 import { EditPencil } from 'iconoir-react'
 import './style/card.css'
+import SkillList from './skilllist'
 
 export default function Card(props: any) {
 
@@ -62,6 +63,9 @@ export default function Card(props: any) {
             document.getElementById('card-edit-' + cardId)?.classList.toggle('card-edit-btn-hidden')
             document.getElementById('card-edit-btn-'+ cardId)?.classList.toggle('card-edit-btn-hidden')
             document.getElementById('card-' + cardId)?.classList.toggle('hidden')
+            if (document.getElementById("card-popup-" + mononoke.id)?.classList.contains("show")) {
+                document.getElementById("card-popup-" + mononoke.id)?.classList.toggle("show")
+            }
         }
     }
 
@@ -404,10 +408,8 @@ export default function Card(props: any) {
                         </div>
                     </div>
                     <div className='card-body-data'>
-                        <LootList mononoke={mononoke} />
-                        <div className='card-body-skills'>
-                            <h4>Skills</h4>
-                        </div>
+                        <LootList mononoke={mononoke} isEditing={isEditing}  />
+                        <SkillList mononoke={mononoke} isEditing={isEditing} />
                     </div>
                 </div>
             </div>

@@ -37,6 +37,9 @@ export default function Sidebar(props: any) {
         gold: 0,
         loot: [
 
+        ],
+        skills: [
+            
         ]
     }
 

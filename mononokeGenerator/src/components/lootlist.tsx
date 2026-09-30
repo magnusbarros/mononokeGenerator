@@ -1,37 +1,17 @@
 import { PlusSquare, EditPencil, Trash, FloppyDisk, Xmark } from "iconoir-react"
-import { use, useState } from "react"
+import { useState } from "react"
+import './style/lootlist.css'
 
 export default function LootList(props: any) {
 
     const [reload, setReload] = useState(false)
     const [mononoke, setMononoke] = useState(props.mononoke)
-    const [tempItem, setTempItem] = useState(null)
 
 
     function handleEdit(event: any, item: any) {
         event.preventDefault()
-        setTempItem(item)
-        console.log('stored', tempItem)
         item.editLock = !item.editLock
         setMononoke(mononoke)
-        setReload(true)
-    }
-
-    function handleCancel(event: any, item: any) {
-        event.preventDefault()
-        item.editLock = !item.editLock
-        if (tempItem !== undefined && tempItem !== null) {
-            mononoke.loot.map((storedItem: any) => {
-                if (storedItem.key === item.key) {
-                    storedItem = tempItem
-                    console.log('restored', tempItem)
-                }
-            })
-            setMononoke(mononoke)
-        } else {
-            setTempItem(null)
-            setMononoke(mononoke)
-        }
         setReload(true)
     }
 
@@ -55,7 +35,6 @@ export default function LootList(props: any) {
 
     function handleChangeExtra(event: any) {
         const { name, value } = event.target
-        console.log('called' , name, value)
         if (name === 'xpAward' && value === '') {
             mononoke[name] = mononoke.lv
         } else mononoke[name] = value
@@ -73,8 +52,12 @@ export default function LootList(props: any) {
     }
 
     function handleAdd(event: any) {
+        var nextKey = 0
+        if (mononoke.loot[mononoke.loot.length - 1] !== undefined) {
+            nextKey = mononoke.loot[mononoke.loot.length - 1].key + 1
+        }
         const newItem = {
-            key: mononoke.loot[mononoke.loot.length - 1].key + 1,
+            key: nextKey,
             roll: 'None',
             desc: '',
             editLock: false
@@ -96,14 +79,32 @@ export default function LootList(props: any) {
                     <div className="loot-extra">
                         <div className="loot-extra-item">
                             <p>XP: </p>
-                            <input onChange={handleChangeExtra} name="xpAward" type="number" defaultValue={mononoke.xpAward} />
+                            {
+                                props.isEditing ? (
+                                    <input onChange={handleChangeExtra} name="xpAward" type="number" defaultValue={mononoke.xpAward} />
+                                ) : (
+                                    <p>{mononoke.xpAward}</p>
+                                )
+                            }
                         </div>
                         <div className="loot-extra-item">
-                            <p>Ley Gold: </p>
-                            <input onChange={handleChangeExtra} name="gold" type="number" defaultValue={mononoke.gold} />
+                            <p>Gold: </p>
+                            {
+                                props.isEditing ? (
+                                    <input onChange={handleChangeExtra} name="gold" type="number" defaultValue={mononoke.gold} />
+                                ) : (
+                                    <p>{mononoke.gold}</p>
+                                )
+                            }
                         </div>
+                        {
+                            props.isEditing ? (
+                                <div className="loot-extra-item">
+                                    <button onClick={handleAdd} className="loot-header-add"><PlusSquare width={50} /></button>
+                                </div>
+                            ) : (<></>)
+                        }
                     </div>
-                    <button onClick={handleAdd} className="loot-header-add"><PlusSquare width={50} /></button>
                 </div>
                 <table>
                     <thead>
@@ -113,9 +114,6 @@ export default function LootList(props: any) {
                             </th>
                             <th>
                                 <p>Item</p>
-                            </th>
-                            <th>
-                                <p>Edit</p>
                             </th>
                         </tr>
                     </thead>
@@ -136,24 +134,27 @@ export default function LootList(props: any) {
                                                                 <td>
                                                                     <p>{item.desc}</p>
                                                                 </td>
-                                                                <td>
-                                                                    <button onClick={(e) => handleEdit(e, item)} id={'edit-' + item.key}><EditPencil /></button>
-                                                                    <button onClick={(e) => handleDelete(e, item)} id={'delete-' + item.key}><Trash /></button>
-                                                                </td>
+                                                                {
+                                                                    props.isEditing ? (
+                                                                        <td>
+                                                                            <button onClick={(e) => handleEdit(e, item)} id={'edit-' + item.key}><EditPencil /></button>
+                                                                            <button onClick={(e) => handleDelete(e, item)} id={'delete-' + item.key}><Trash /></button>
+                                                                        </td>
+                                                                    ) : (<></>)
+                                                                }
                                                             </>
                                                         )
                                                         :
                                                         (
                                                             <>
                                                                 <td>
-                                                                    <input onChange={(e) => handleChange(e, item)} name='roll' type="text" defaultValue={item.roll} />
+                                                                    <input className="roll-edit" onChange={(e) => handleChange(e, item)} name='roll' type="text" defaultValue={item.roll} />
                                                                 </td>
                                                                 <td>
-                                                                    <input onChange={(e) => handleChange(e, item)} name='desc' type="textarea" defaultValue={item.desc} />
+                                                                    <input className="desc-edit" onChange={(e) => handleChange(e, item)} name='desc' type="textarea" defaultValue={item.desc} />
                                                                 </td>
                                                                 <td>
                                                                     <button onClick={(e) => { handleSave(e, item) }} id={'edit-' + item.key}><FloppyDisk /></button>
-                                                                    <button onClick={(e) => handleCancel(e, item)} id={'delete-' + item.key}><Xmark /></button>
                                                                 </td>
                                                             </>
                                                         )

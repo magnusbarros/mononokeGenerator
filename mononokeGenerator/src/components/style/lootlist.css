@@ -1,0 +1,141 @@
+
+.card-body-loot h4 {
+    height: 24px;
+    padding: 3px;
+    width: 99%;
+    margin: 0;
+    margin-bottom: 5px;
+    position: relative;
+    color: white;
+    background-color: rgb(84, 84, 84);
+    z-index: 1;
+    cursor: pointer;
+}
+
+.card-body-loot,
+.card-body-loot {
+    min-height: fit-content;
+    width: 100%;
+    position: relative;
+}
+
+.card-body-loot button {
+    float: right;
+    margin-right: 5px;
+}
+
+.card-body-loot tbody p {
+    font-size: 13px;
+}
+
+.card-body-loot .roll-edit {
+    width: 40px;
+}
+
+.card-body-loot .desc-edit {
+    width: 80%;
+}
+
+.card-popup {
+    z-index: 3;
+    position: absolute;
+    left: inherit;
+    width: 60px;
+    margin-left: 260px;
+    background-color: rgba(0, 0, 0, 0.5);
+    visibility: hidden;
+}
+
+.card-popup.show {
+    visibility: visible;
+}
+
+.card-type-popup {
+    position: absolute;
+    top: 75px;
+    height: 80px;
+    width: 350px;
+    background-color: rgba(0, 0, 0, 0.7);
+    visibility: hidden;
+    overflow-y: scroll;
+}
+
+.card-extra-popup {
+    position: absolute;
+    height: 80px;
+    width: 350px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    text-align: left;
+    margin-top: 20px;
+    margin-left: 70px;
+    visibility: hidden;
+}
+
+.card-type-popup,  label
+.card-extra-popup,  label {
+    white-space: nowrap;
+}
+
+.card-type-popup.show,
+.card-extra-popup.show  {
+    visibility: visible;
+}
+
+.mononoke-loot-table {
+    min-height: fit-content;
+}
+
+.mononoke-loot-table.hide {
+    display: none;
+}
+
+.mononoke-loot-table .loot-header {
+    margin: 5px;
+}
+
+.mononoke-loot-table .loot-header .loot-header-add {
+    background: transparent;
+    border: none !important;
+    cursor: pointer;
+    float: right;
+}
+
+.mononoke-loot-table .loot-header .loot-header-add svg {
+    position: relative;
+    top: 3px;
+}
+
+.mononoke-loot-table table{
+    width: 100%;
+    min-height: fit-content;
+    margin: 10px;
+    position: relative;
+}
+
+.mononoke-loot-table p {
+    float: left;
+    margin: 5px;
+    max-width: 300px;
+    font-size: 15px;
+}
+
+.loot-extra {
+    margin: 5px;
+    float: left;
+}
+
+.loot-extra p {
+    text-align: center;
+}
+
+.loot-extra input {
+    width: 100px;
+    margin-top: 3px;
+    position: relative;
+}
+
+.loot-extra-item {
+    float: left;
+    margin: 5px;
+}

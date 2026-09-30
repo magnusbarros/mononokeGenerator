@@ -1,0 +1,135 @@
+.card-body-skills {
+    width: 100%;
+    min-height: 30px;
+    margin-bottom: 5px;
+    z-index: 1;
+    cursor: pointer;
+    position: relative;
+    background-color: rgb(84, 84, 84);
+}
+
+.card-body-skills h4 {
+    margin: 0;
+    padding: 3px;
+    position: relative;
+    color: white;
+}
+
+.skill-add-btn {
+    top: 0;
+    position: absolute;
+    margin: 2px;
+    height: 25px;
+    z-index: 2;
+    right: 0;
+}
+
+.skill-list {
+    overflow-y: scroll;
+    max-height: 600px;
+}
+
+.skill-list.hide {
+    display: none;
+}
+
+.skill-wrapper {
+    width: 97%;
+    margin-right: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid;
+    padding: 3px;
+    margin-bottom: 5px;
+}
+
+.skill-data {
+    display: flex;
+}
+
+.skill-header {
+    width: 99.9%;
+    height: 40px;
+    background-color: rgb(84, 84, 84);
+    cursor: pointer;
+}
+
+.skill-header .header-title {
+    text-align: center;
+    position: relative;
+    color: white;
+    margin-top: 12px;
+}
+
+.skill-header input {
+    margin-left: 30%;
+    margin-top: 10px;
+}
+
+.skill-header .toggle-edit-button {
+    position: relative;
+    float: right;
+    margin-top: -5px;
+    margin-right: 5px;
+}
+
+.skill-header .edit-button {
+    margin-top: 5px;
+    margin-right: 5px;
+    float: right;
+}
+
+.skill-data-box {
+    width: 114px;
+    border: 1px solid;
+}
+
+.skill-data-box-header {
+    height: 20px;
+    margin-bottom: 2px;
+    padding-top: 1px;
+    padding-bottom: 10px;
+    background-color: rgb(84, 84, 84);
+}
+
+.skill-data-box p {
+    text-align: center;
+    margin-top: 5px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.skill-data-box .data-label {
+    color: white;
+}
+
+.skill-data-box input {
+    width: 50px;
+    margin-left: 25%;
+    margin-bottom: 2px;
+}
+
+.skill-data-box .target-select {
+    margin-left: 5px;
+}
+
+.skill-fluff textarea,
+.skill-desc textarea {
+    width: 450px;
+    position: relative;
+}
+
+.skill-fluff,
+.skill-desc {
+    width: 100%;
+    font-size: 12px;
+}
+
+.skill-fluff p,
+.skill-desc p {
+    margin: 5px;
+}
+
+.skill-detail-wrapper.hide{
+    display: none;
+}
