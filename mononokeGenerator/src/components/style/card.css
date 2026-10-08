@@ -6,12 +6,19 @@
     border: 3px solid;
     padding: 3px;
     font-family: Comfortaa;
+    display: flex;
     flex: 2 1 500px;
-    max-height: fit-content;
+    max-height: fit-content -moz-fit-content;
 }
 
 .mononoke-card.hidden {
     height: 60px;
+}
+
+.mononoke-card .card-header-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .mononoke-card .card-header {
@@ -63,6 +70,12 @@
 
 .mononoke-card .card-header .card-type .card-type-edit {
     cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .mononoke-card .card-header .card-name-input {
@@ -99,7 +112,7 @@
 }
 
 .mononoke-card .card-header .card-lv input {
-    width: 30%;
+    width: 50%;
     margin-bottom: 2px;
     text-align: center;
 }
@@ -157,6 +170,12 @@
     font-size: 14px;
     font-weight: bold;
     margin: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .mononoke-card .card-body-extra-info .card-body-infobox .info{
@@ -167,7 +186,7 @@
 }
 
 .card-input-new {
-    width: 80px;
+    max-width: 100px;
     height: 20px;
     margin: 2px;
 }
@@ -226,4 +245,40 @@
 .mononoke-card .card-body-data {
     color: black;
     width: 100%;
+}
+
+.card-extra-popup {
+    position: absolute;
+    height: 80px;
+    width: 350px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    text-align: left;
+    margin-top: 20px;
+    margin-left: 70px;
+    visibility: hidden;
+}
+
+.card-type-popup,  label
+.card-extra-popup,  label {
+    white-space: nowrap;
+}
+
+.card-type-popup.show,
+.card-extra-popup.show  {
+    visibility: visible;
+}
+
+.type-checkboxes {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 80px;
+    display: flex; 
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.type-checkboxes label {
+    white-space: nowrap;
+    margin: 2px;
 }

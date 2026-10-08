@@ -1,5 +1,5 @@
 .card-list-wrapper {
-    display: flex;
+    display: table;
     flex-wrap: wrap;
     width: 100%;
     flex-direction: row;

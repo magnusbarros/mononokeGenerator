@@ -60,28 +60,6 @@
     overflow-y: scroll;
 }
 
-.card-extra-popup {
-    position: absolute;
-    height: 80px;
-    width: 350px;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    text-align: left;
-    margin-top: 20px;
-    margin-left: 70px;
-    visibility: hidden;
-}
-
-.card-type-popup,  label
-.card-extra-popup,  label {
-    white-space: nowrap;
-}
-
-.card-type-popup.show,
-.card-extra-popup.show  {
-    visibility: visible;
-}
-
 .mononoke-loot-table {
     min-height: fit-content;
 }
@@ -103,35 +81,37 @@
 
 .mononoke-loot-table .loot-header .loot-header-add svg {
     position: relative;
-    top: 3px;
+    top: -2px;
 }
 
 .mononoke-loot-table table{
     width: 100%;
     min-height: fit-content;
-    margin: 10px;
     position: relative;
+    display: table;
 }
 
 .mononoke-loot-table p {
     float: left;
     margin: 5px;
-    max-width: 300px;
     font-size: 15px;
 }
 
 .loot-extra {
-    margin: 5px;
+    margin: 0;
     float: left;
 }
 
 .loot-extra p {
+    margin: 0;
+    margin-left: 5px;
     text-align: center;
 }
 
 .loot-extra input {
     width: 100px;
-    margin-top: 3px;
+    top: -2px;
+    margin-left: 5px;
     position: relative;
 }
 

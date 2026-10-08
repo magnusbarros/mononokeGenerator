@@ -24,7 +24,7 @@ export default function TypeRadio(props: any) {
     return (<>
         {props.isEditing !== undefined && props.isEditing ?
             (
-                <div style={{ overflowY: 'auto', maxHeight: '70px', whiteSpace: 'normal' }}>
+                <div className='type-checkboxes'>
                     {props.allTypes.map((type: string) => (
                         <label key={type}>
                             <input type='radio' name={props.type} value={type}

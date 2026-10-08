@@ -17,6 +17,7 @@ export default function Card(props: any) {
     const defaultReaction = ['Friendly', 'Neutral', 'Hostile', 'Mercurial']
 
     const [mononoke, setMononoke] = useState(props.mononoke)
+    const [reload, setReload] = useState(false)
 
     const [isEditing, setIsEditing] = useState(false)
     const [allTypes, setAllTypes] = useState(defaultTypes)
@@ -40,19 +41,19 @@ export default function Card(props: any) {
         }
     })
 
-    if (!allCunning.includes(mononoke.cunning)) {
+    if (!allCunning.includes(mononoke.cunning) && mononoke.cunning !== '') {
         setAllCunning([...allCunning, mononoke.cunning]);
     }
 
-    if (!allReaction.includes(mononoke.reaction)) {
+    if (!allReaction.includes(mononoke.reaction) && mononoke.reaction !== '') {
         setAllReaction([...allReaction, mononoke.reaction])
     }
 
-    if (!allPerception.includes(mononoke.perception)) {
+    if (!allPerception.includes(mononoke.perception) && mononoke.perception !== '') {
         setAllperception([...allPerception, mononoke.perception]);
     }
 
-    if (!allTypes.includes(mononoke.type)) {
+    if (!allTypes.includes(mononoke.type) && mononoke.type !== '') {
         setAllTypes([...allTypes, mononoke.type]);
     }
 
@@ -61,7 +62,7 @@ export default function Card(props: any) {
             var cardBody = document.getElementById('card-' + cardId)?.getElementsByClassName('card-body')[0]
             cardBody?.classList.toggle('card-body-hidden')
             document.getElementById('card-edit-' + cardId)?.classList.toggle('card-edit-btn-hidden')
-            document.getElementById('card-edit-btn-'+ cardId)?.classList.toggle('card-edit-btn-hidden')
+            document.getElementById('card-edit-btn-' + cardId)?.classList.toggle('card-edit-btn-hidden')
             document.getElementById('card-' + cardId)?.classList.toggle('hidden')
             if (document.getElementById("card-popup-" + mononoke.id)?.classList.contains("show")) {
                 document.getElementById("card-popup-" + mononoke.id)?.classList.toggle("show")
@@ -75,33 +76,32 @@ export default function Card(props: any) {
         const currentMononoke = mononoke;
 
         if (type === 'stat') {
-            if (name === 'init') {
+
+            var parsedValue = (Number.isNaN(parseInt(value)) ? 0 : parseInt(value));
+            if (name === 'chk' && Number.isNaN(parseInt(value))) {
+                parsedValue = 6;
+            } else if (name === 'init') {
                 currentMononoke.stats.customInit = value !== '' && parseInt(value) !== currentMononoke.stats.eva + 5;
-                if (value === '' || Number.isNaN(parseInt(value))) {
-                    currentMononoke.stats.init = currentMononoke.stats.eva + 5;
+                if (Number.isNaN(parseInt(value))) {
+                    parsedValue= currentMononoke.stats.eva + 5;
                 }
             } else if (name === 'speed') {
                 currentMononoke.stats.customSpd = value !== '' && parseInt(value) !== Math.round((currentMononoke.stats.eva + 5) / 3);
-                if (value === '' || Number.isNaN(parseInt(value))) {
-                    currentMononoke.stats.speed = Math.round((currentMononoke.stats.eva + 5) / 3);
+                if (Number.isNaN(parseInt(value))) {
+                    parsedValue = Math.round((currentMononoke.stats.eva + 5) / 3);
                 }
-            } else {
-                if (!currentMononoke.stats.customInit) {
-                    currentMononoke.stats.init = currentMononoke.stats.eva + 5;
-                }
-                if (!currentMononoke.stats.customSpd) {
-                    currentMononoke.stats.speed = Math.round((currentMononoke.stats.eva + 5) / 3);
-                }
-
-                var parsedValue = (Number.isNaN(parseInt(value)) ? 0 : parseInt(value));
-                if (name === 'chk' && Number.isNaN(parseInt(value))) {
-                    parsedValue = 6;
-                }
-
-                const xpDebt = parseInt(currentMononoke.stats[name]) - parsedValue;
-                currentMononoke.xp = parseInt(currentMononoke.xp) + xpDebt;
-                currentMononoke.stats[name] = parsedValue;
             }
+
+            if (!currentMononoke.stats.customInit) {
+                parsedValue = currentMononoke.stats.eva + 5;
+            }
+            if (!currentMononoke.stats.customSpd) {
+                parsedValue = Math.round((currentMononoke.stats.eva + 5) / 3);
+            }
+
+            const xpDebt = parseInt(currentMononoke.stats[name]) - parsedValue;
+            currentMononoke.xp = parseInt(currentMononoke.xp) + xpDebt;
+            currentMononoke.stats[name] = parsedValue;
 
         } else if (type === 'weaknesses' || type === 'movement') {
             if (currentMononoke[type].includes(value)) {
@@ -117,11 +117,11 @@ export default function Card(props: any) {
         } else if (type === 'size') {
             if (value === '' || value === null) {
                 currentMononoke[type] = 2
-            } else currentMononoke[name] = value;
+            } else currentMononoke[name] = parseInt(value);
         } else if (type === 'ident') {
             if (value === '' || value === null) {
                 currentMononoke[type] = 6 + currentMononoke.lv * 2
-            } else currentMononoke[name] = value;
+            } else currentMononoke[name] = parseInt(value);
         } else if (type === 'lv') {
             const oldValue = parseInt(currentMononoke[name]);
             const newValue = Number.isNaN(parseInt(value)) ? 0 : parseInt(value);
@@ -141,6 +141,14 @@ export default function Card(props: any) {
         setIsEditing(false)
         props.save(mononoke)
         console.log('Saved changes')
+    }
+
+    function handlePopupToggle(extraInfoType: string) {
+        setExtraInfo(extraInfoType)
+        const popupElement = document.getElementById("card-extra-popup-" + mononoke.id);
+        if (popupElement) {
+            popupElement.classList.toggle("show");
+        }
     }
 
     function TypePopup() {
@@ -230,7 +238,7 @@ export default function Card(props: any) {
                         <LevelEdit mononoke={mononoke}
                             isEditing={isEditing} setIsEditing={setIsEditing}
                             handleOnChange={handleOnChange}
-                            handleSaveChanges={handleSaveChanges} 
+                            handleSaveChanges={handleSaveChanges}
                             handleRemove={props.remove} />
                     </div>
                 </div>
@@ -263,20 +271,14 @@ export default function Card(props: any) {
                     <div className='card-body-extra-info'>
                         <div className='card-body-infobox'>
                             <p className={isEditing ? ('label edit') : ('label')}
-                                onClick={() => {
-                                    setExtraInfo('perception'),
-                                        document.getElementById('card-extra-popup-'+mononoke.id)?.classList.toggle('show')
-                                }}>
+                                onClick={() => handlePopupToggle('perception')}>
                                 Perception: {isEditing ? (<EditPencil height={15} width={15} />) : (<></>)}
                             </p><br />
                             <p className='info' key={"perception-" + mononoke.perception.trim()}>{mononoke.perception}</p>
                         </div>
                         <div className='card-body-infobox'>
                             <p className={isEditing ? ('label edit') : ('label')}
-                                onClick={() => {
-                                    setExtraInfo('movement'),
-                                        document.getElementById('card-extra-popup-'+mononoke.id)?.classList.toggle('show')
-                                }}>
+                                onClick={() => handlePopupToggle('movement')}>
                                 Movement: {isEditing ? (<EditPencil height={15} width={15} />) : (<></>)}
                             </p><br />
                             {mononoke.movement.map((move: string) => (
@@ -285,10 +287,7 @@ export default function Card(props: any) {
                         </div>
                         <div className='card-body-infobox'>
                             <p className={isEditing ? ('label edit') : ('label')}
-                                onClick={() => {
-                                    setExtraInfo('cunning'),
-                                        document.getElementById('card-extra-popup')?.classList.toggle('show')
-                                }}>
+                                onClick={() => handlePopupToggle('cunning')}>
                                 Cunning: {isEditing ? (<EditPencil height={15} width={15} />) : (<></>)}
                             </p><br />
                             <p className='info' key={"cng-" + mononoke.cunning.trim()}>{mononoke.cunning}</p>
@@ -301,10 +300,7 @@ export default function Card(props: any) {
                             <p className='info'>{mononoke.speech ? (<>Yes</>) : (<>No</>)}</p>
                         </div>
                         <div className='card-body-infobox'
-                            onClick={() => {
-                                setExtraInfo('reaction'),
-                                    document.getElementById('card-extra-popup')?.classList.toggle('show')
-                            }}>
+                            onClick={() => handlePopupToggle('reaction')}>
                             <p className={isEditing ? ('label edit') : ('label')}>
                                 Reaction: {isEditing ? (<EditPencil height={15} width={15} />) : (<></>)}
                             </p><br />
@@ -408,7 +404,7 @@ export default function Card(props: any) {
                         </div>
                     </div>
                     <div className='card-body-data'>
-                        <LootList mononoke={mononoke} isEditing={isEditing}  />
+                        <LootList mononoke={mononoke} isEditing={isEditing} />
                         <SkillList mononoke={mononoke} isEditing={isEditing} />
                     </div>
                 </div>

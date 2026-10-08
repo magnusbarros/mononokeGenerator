@@ -25,18 +25,25 @@ export default function LevelEdit(props: any) {
     function Popup() {
         return (
             <div className='card-popup' id={"card-popup-" + mononoke.id}>
-                <button className='card-edit-btn' id={'card-edit-' + mononoke.id}
-                    onClick={(event) => { event.stopPropagation(), props.setIsEditing(true) }}>
-                    <EditPencil height={30} />
-                </button>
-                <button className='card-edit-btn' id={'card-save-' + mononoke.id}
-                    onClick={(event) => { event.stopPropagation(), props.handleSaveChanges() }}>
-                    <FloppyDisk height={30} />
-                </button>
-                <button className='card-edit-btn' id={'card-delete-' + mononoke.id}
-                    onClick={(e) => { e.stopPropagation(), props.handleRemove(mononoke) }}>
-                    <Trash height={30} />
-                </button>
+                {
+                    !props.isEditing ? (
+                        <button className='card-edit-btn' id={'card-edit-' + mononoke.id}
+                            onClick={(event) => { event.stopPropagation(), props.setIsEditing(true) }}>
+                            <EditPencil height={30} />
+                        </button>
+                    ) : (
+                        <>
+                            <button className='card-edit-btn' id={'card-save-' + mononoke.id}
+                                onClick={(event) => { event.stopPropagation(), props.handleSaveChanges() }}>
+                                <FloppyDisk height={30} />
+                            </button><button className='card-edit-btn' id={'card-delete-' + mononoke.id}
+                                onClick={(e) => { e.stopPropagation(), props.handleRemove(mononoke) }}>
+                                <Trash height={30} />
+                            </button>
+                        </>
+                    )
+                }
+
             </div>
         )
     }

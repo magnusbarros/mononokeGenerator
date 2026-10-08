@@ -25,7 +25,7 @@ export default function TypeCheckboxes(props: any) {
     return (<>
         {props.isEditing !== undefined && props.isEditing ?
             (
-                <div style={{overflowY: 'auto', maxHeight: '80px'}}>
+                <div className='type-checkboxes'>
                     {props.allTypes.map((type: string) => (
                         <label key={type}>
                             <input type='checkbox' name={props.type} value={type}

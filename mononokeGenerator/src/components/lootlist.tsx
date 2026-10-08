@@ -18,7 +18,7 @@ export default function LootList(props: any) {
     function handleSave(event: any, item: any) {
         item.editLock = !item.editLock
         if (item.roll === '') {
-            item.roll = '-'
+            item.roll = 'None'
         }
         if (item.desc === '') {
             item.desc = 'None'
@@ -58,7 +58,7 @@ export default function LootList(props: any) {
         }
         const newItem = {
             key: nextKey,
-            roll: 'None',
+            roll: '',
             desc: '',
             editLock: false
         }

@@ -4,11 +4,9 @@ import Sidebar from './sidebar';
 
 import './style/dashboard.css'
 
-const placeholder = []
-
 export default function Dashboard() {
 
-    const [mononokeList, setMononokeList] = useState(localStorage.getItem('savedMononoke') !== null ? JSON.parse(localStorage.getItem('savedMononoke')) : placeholder)
+    const [mononokeList, setMononokeList] = useState(localStorage.getItem('savedMononoke') !== null ? JSON.parse(localStorage.getItem('savedMononoke')) : [])
     const [reload, setReload] = useState(false)
 
     function save(itemToSave: any) {
@@ -47,7 +45,7 @@ export default function Dashboard() {
                 {
                     !reload ?
                         (
-                            <CardList defaultList={mononokeList !== undefined && mononokeList !== null ? mononokeList : placeholder} save={save} remove={remove} />
+                            <CardList defaultList={mononokeList !== undefined && mononokeList !== null ? mononokeList : []} save={save} remove={remove} />
                         )
                         :
                         (

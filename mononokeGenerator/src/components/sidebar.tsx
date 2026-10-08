@@ -1,5 +1,6 @@
 import './style/sidebar.css'
 import icon from '../assets/icon.ico'
+import { PlusCircle } from 'iconoir-react'
 import { useState } from 'react'
 
 export default function Sidebar(props: any) {
@@ -10,7 +11,7 @@ export default function Sidebar(props: any) {
         name: 'Unnamed',
         lv: 1,
         xp: 10,
-        type: '',
+        type: 'Humanoid',
         weaknesses: [],
         size: 2,
         ident: 8,
@@ -54,7 +55,7 @@ export default function Sidebar(props: any) {
     return (
         <div className='sidebar'>
             <img src={icon} className='icon' />
-            <button className='sidebar-button' onClick={addMononoke}><p>+</p></button>
+            <button className='sidebar-button' onClick={addMononoke}><PlusCircle /></button>
         </div>
     )
 }

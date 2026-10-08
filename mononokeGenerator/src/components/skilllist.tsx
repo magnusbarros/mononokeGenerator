@@ -5,6 +5,7 @@ import './style/skilllist.css'
 export default function SkillList(props: any) {
 
     const defaultTarget = ['User', 'Item', 'Area', 'Combat Zone', 'Other']
+    const defaultTiming = ['Start', 'Start / Free', 'Start / End', 'Prep', 'Prep / Attack' , 'Attack', 'Free', 'End', 'Constant']
 
     const [mononoke, setMononoke] = useState(props.mononoke)
     const [skillList, setSkillList] = useState(props.mononoke.skills)
@@ -124,7 +125,6 @@ export default function SkillList(props: any) {
 
         function handleChange(e: any) {
             const { name, value } = e.target
-            console.log(name, value)
             skill[name] = value
             setSkill(skill)
         }
@@ -173,7 +173,13 @@ export default function SkillList(props: any) {
                             <p className="data-label">Timing:</p>
                         </div>
                         <div className="skill-data-box-content">
-                            <input name="timing" type="text" defaultValue={skill.timing} onChange={(e) => handleChange(e)} />
+                            <select name="timing" onChange={(e) => handleChange(e)} className="target-select" defaultValue={skill.timing}>
+                                {
+                                    defaultTiming.map((time: string) => (
+                                        <option key={time} value={time}>{time}</option>
+                                    ))
+                                }
+                            </select>
                         </div>
                     </div>
                     <div className="skill-data-box">
@@ -189,13 +195,7 @@ export default function SkillList(props: any) {
                             <p className="data-label">Target:</p>
                         </div>
                         <div className="skill-data-box-content">
-                            <select name="target" onChange={(e) => handleChange(e)} className="target-select" defaultValue={skill.target}>
-                                {
-                                    defaultTarget.map((tgt: string) => (
-                                        <option key={tgt} value={tgt}>{tgt}</option>
-                                    ))
-                                }
-                            </select>
+                            <input name="target" type="text" defaultValue={skill.target} onChange={(e) => handleChange(e)} />
                         </div>
                     </div>
                     <div className="skill-data-box">
