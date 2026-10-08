@@ -14,10 +14,10 @@ export default function SkillList(props: any) {
     const emptySkill = {
         id: '',
         name: '',
-        timing: '',
+        timing: 'Start',
         range: '',
         target: 'User',
-        cost: 'None.',
+        cost: 'None',
         fluff: '',
         description: '',
         lockEdit: false

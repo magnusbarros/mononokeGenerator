@@ -4,22 +4,21 @@ import { EditPencil, FloppyDisk, Menu, Trash } from 'iconoir-react'
 export default function LevelEdit(props: any) {
 
     const [mononoke, setMononoke] = useState(props.mononoke)
+    const [reload, setReload] = useState(false)
 
     function handleOnChange(e: any, field: string) {
-        props.handleOnChange(e, field)
         const oldValue = parseInt(mononoke[field]);
         const newValue = parseInt(e.target.value);
         const diff = newValue - oldValue;
         mononoke.xp = parseInt(mononoke.xp) + (diff * 4);
         setMononoke({ ...mononoke, [field]: e.target.value })
-
     }
 
     function handleOnClick(e: any, field: string, value: number) {
-        props.handleOnChange({ target: { name: field, value: value } }, field)
         mononoke.xp = parseInt(mononoke.xp) + ((value - parseInt(mononoke[field])) * 4);
         mononoke.lv = value;
         setMononoke({ ...mononoke, [field]: value })
+        setReload(true)
     }
 
     function Popup() {
@@ -43,8 +42,14 @@ export default function LevelEdit(props: any) {
                         </>
                     )
                 }
-
             </div>
+        )
+    }
+
+    function LvInput() {
+        return (
+            <input type='number' name='lv' defaultValue={mononoke.lv}
+                onChange={(e) => handleOnChange(e, 'lv')} />
         )
     }
 
@@ -62,8 +67,11 @@ export default function LevelEdit(props: any) {
             props.isEditing ?
                 (
                     <p className='card-lv card-lv-expand'>
-                        <input type='number' name='lv' defaultValue={mononoke.lv}
-                            onChange={(e) => handleOnChange(e, 'lv')} />
+                        {
+                            !reload ? (
+                                <LvInput />
+                            ) : (<>{setReload(false)}</>)
+                        }
                         <button onClick={
                             (e) => {
                                 e.stopPropagation();

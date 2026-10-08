@@ -130,6 +130,10 @@
     margin: 5px;
 }
 
+.skill-fluff p {
+    font-style: italic;
+}
+
 .skill-detail-wrapper.hide{
     display: none;
 }
