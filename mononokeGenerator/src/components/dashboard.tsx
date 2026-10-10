@@ -3,6 +3,8 @@ import CardList from './cardList'
 import Sidebar from './sidebar';
 
 import './style/dashboard.css'
+import { Search } from 'iconoir-react';
+import SearchToolbar from './searchtoolbar';
 
 export default function Dashboard() {
 
@@ -42,6 +44,7 @@ export default function Dashboard() {
         <div className='dashboard-wrapper'>
             <Sidebar list={mononokeList} save={save} />
             <div className="dashboard" id='dashboard'>
+            <SearchToolbar search={''} setSearch={() => { }} />
                 {
                     !reload ?
                         (

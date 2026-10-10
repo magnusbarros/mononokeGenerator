@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { EditPencil, FloppyDisk, Menu, Trash } from 'iconoir-react'
+import './style/leveledit.css'
 
 export default function LevelEdit(props: any) {
 
@@ -26,18 +27,27 @@ export default function LevelEdit(props: any) {
             <div className='card-popup' id={"card-popup-" + mononoke.id}>
                 {
                     !props.isEditing ? (
-                        <button className='card-edit-btn' id={'card-edit-' + mononoke.id}
-                            onClick={(event) => { event.stopPropagation(), props.setIsEditing(true) }}>
-                            <EditPencil height={30} />
-                        </button>
+                        <>
+                            <button className='card-edit-btn' id={'card-edit-' + mononoke.id}
+                                onClick={(event) => { event.stopPropagation(), props.setIsEditing(true) }}>
+                                <EditPencil height={30} />
+                            </button>
+                            <button className='card-edit-btn' id={'card-delete-' + mononoke.id}
+                                onClick={(e) => { e.stopPropagation(), e.ctrlKey ? props.handleRemove(mononoke) : null }}>
+                                <Trash height={30} />
+                                <span className='card-delete-tooltip'>Ctrl + Click to Delete</span>
+                            </button>
+                        </>
                     ) : (
                         <>
                             <button className='card-edit-btn' id={'card-save-' + mononoke.id}
                                 onClick={(event) => { event.stopPropagation(), props.handleSaveChanges() }}>
                                 <FloppyDisk height={30} />
-                            </button><button className='card-edit-btn' id={'card-delete-' + mononoke.id}
-                                onClick={(e) => { e.stopPropagation(), props.handleRemove(mononoke) }}>
+                            </button>
+                            <button className='card-edit-btn' id={'card-delete-' + mononoke.id}
+                                onClick={(e) => { e.stopPropagation(), e.ctrlKey ? props.handleRemove(mononoke) : null }}>
                                 <Trash height={30} />
+                                <span className='card-delete-tooltip'>Ctrl + Click to Delete</span>
                             </button>
                         </>
                     )

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import TypeRadio from './typeRadio'
 import TypeCheckboxes from './typecheckboxes'
 import { EditPencil } from "iconoir-react"
-
+import './style/infoblock.css'
 
 export default function InfoBlock(props: any) {
 

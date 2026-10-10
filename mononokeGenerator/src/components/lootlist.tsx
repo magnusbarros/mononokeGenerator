@@ -18,12 +18,6 @@ export default function LootList(props: any) {
 
     function handleSave(event: any, item: any) {
         item.editLock = !item.editLock
-        if (item.roll === '') {
-            item.roll = 'None'
-        }
-        if (item.desc === '') {
-            item.desc = 'None'
-        }
         setMononoke(mononoke)
         setReload(true)
     }
@@ -131,10 +125,10 @@ export default function LootList(props: any) {
                                                         (
                                                             <>
                                                                 <td>
-                                                                    <p>{item.roll}</p>
+                                                                    <p>{item.roll === '' ? 'None' : item.roll}</p>
                                                                 </td>
                                                                 <td>
-                                                                    <p>{item.desc}</p>
+                                                                    <p>{item.desc === '' ? 'None' : item.desc}</p>
                                                                 </td>
                                                                 {
                                                                     props.isEditing ? (
@@ -150,10 +144,10 @@ export default function LootList(props: any) {
                                                         (
                                                             <>
                                                                 <td>
-                                                                    <input className="roll-edit" onChange={(e) => handleChange(e, item)} name='roll' type="text" defaultValue={item.roll} />
+                                                                    <input className="roll-edit" onFocus={(e) => e.target.select()} onChange={(e) => handleChange(e, item)} name='roll' type="text" defaultValue={item.roll} />
                                                                 </td>
                                                                 <td>
-                                                                    <input className="desc-edit" onChange={(e) => handleChange(e, item)} name='desc' type="textarea" defaultValue={item.desc} />
+                                                                    <input className="desc-edit" onFocus={(e) => e.target.select()} onChange={(e) => handleChange(e, item)} name='desc' type="textarea" defaultValue={item.desc} />
                                                                 </td>
                                                                 <td>
                                                                     <button onClick={(e) => { handleSave(e, item) }} id={'edit-' + item.key}><FloppyDisk /></button>
@@ -165,20 +159,7 @@ export default function LootList(props: any) {
                                         )
                                         ))
                                     :
-                                    (
-                                        <tr key='empty'>
-                                            <td>
-                                                <p>-</p>
-                                            </td>
-                                            <td>
-                                                <p>None</p>
-                                            </td>
-                                            <td>
-                                                <button disabled><EditPencil /></button>
-                                                <button disabled><Trash /></button>
-                                            </td>
-                                        </tr>
-                                    )
+                                    (<></>)
                             ) : (
                                 setReload(false)
                             )

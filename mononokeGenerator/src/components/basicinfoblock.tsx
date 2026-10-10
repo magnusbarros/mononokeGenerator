@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { EditPencil } from 'iconoir-react'
 import TypeRadio from "./typeRadio";
+import './style/basicinfoblock.css'
 
 export default function BasicInfoBlock(props: any) {
 

@@ -96,7 +96,9 @@
 
 .mononoke-loot-table p {
     float: left;
-    margin: 5px;
+    margin: 0;
+    margin-bottom: 2px;
+    margin-left: 2px;
     font-size: 15px;
 }
 
