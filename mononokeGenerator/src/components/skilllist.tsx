@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PlusCircle, FloppyDisk, EditPencil, Trash } from "iconoir-react";
+import { PlusCircle, FloppyDisk, EditPencil, Trash, NavArrowUpSolid, NavArrowDownSolid } from "iconoir-react";
 import './style/skilllist.css'
 
 export default function SkillList(props: any) {
@@ -10,6 +10,7 @@ export default function SkillList(props: any) {
     const [mononoke, setMononoke] = useState(props.mononoke)
     const [skillList, setSkillList] = useState(props.mononoke.skills)
     const [reload, setReload] = useState(false)
+    const [toggleHide, setToggleHide] = useState(false)
 
     const emptySkill = {
         id: '',
@@ -37,6 +38,7 @@ export default function SkillList(props: any) {
     function hideSkillList() {
         var cardBody = document.getElementById('card-skills-' + mononoke.id)
         cardBody?.classList.toggle('hide')
+        setToggleHide(!toggleHide)
     }
 
     function SkillDisplay(props: any) {
@@ -220,7 +222,7 @@ export default function SkillList(props: any) {
     return (
         <div className="skill-list-wrapper">
             <div className='card-body-skills'>
-                <h4 onClick={() => hideSkillList()}>Skills</h4>
+                <h4 onClick={() => hideSkillList()}>Skills {toggleHide ? (<NavArrowDownSolid />) : (<NavArrowUpSolid />)}</h4>
                 {
                     props.isEditing ? (
                         <button className="skill-add-btn" onClick={(e) => addSkill(e)}><PlusCircle /></button>
@@ -231,7 +233,7 @@ export default function SkillList(props: any) {
                 {
                     !reload ? (
                         skillList.map((skill: any) => (
-                            skill.lockEdit ? (
+                            skill.lockEdit || !props.isEditing ? (
                                 <SkillDisplay key={'display-' + skill.id} skill={skill} isEditing={props.isEditing} />
                             ) : (
                                 <SkillEdit key={'edit-' + skill.id} skill={skill} isEditing={props.isEditing} />

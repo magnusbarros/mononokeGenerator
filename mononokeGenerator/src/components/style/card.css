@@ -8,7 +8,7 @@
     font-family: Comfortaa;
     display: flex;
     flex: 2 1 500px;
-    max-height: fit-content -moz-fit-content;
+    height: fit-content;
 }
 
 .mononoke-card.hidden {
@@ -61,8 +61,8 @@
 .mononoke-card .card-header .card-type {
     float: left;
     position: absolute;
-    top: 43px;
-    margin: 5px;
+    margin-top: 33px;
+    margin-left: 5px;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 200px;

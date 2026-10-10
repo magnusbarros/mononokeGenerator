@@ -15,13 +15,17 @@
     color: white;
 }
 
+.card-body-skills h4 svg {
+    float: right;
+}
+
 .skill-add-btn {
     top: 0;
     position: absolute;
     margin: 2px;
     height: 25px;
     z-index: 2;
-    right: 0;
+    right: 25px;
 }
 
 .skill-list {
@@ -45,6 +49,7 @@
 
 .skill-data {
     display: flex;
+    width: 100%;
 }
 
 .skill-header {
@@ -115,7 +120,7 @@
 
 .skill-fluff textarea,
 .skill-desc textarea {
-    width: 450px;
+    width: 98%;
     position: relative;
 }
 
@@ -132,6 +137,10 @@
 
 .skill-fluff p {
     font-style: italic;
+}
+
+.skill-detail-wrapper {
+    width: 100%;
 }
 
 .skill-detail-wrapper.hide{

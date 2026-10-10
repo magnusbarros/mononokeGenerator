@@ -5,6 +5,7 @@
     flex-wrap: wrap;
     width: 100%;
     overflow: hidden;
+    height: fit-content;
 }
 
 .dashboard-wrapper {

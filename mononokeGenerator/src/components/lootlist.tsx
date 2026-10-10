@@ -1,4 +1,4 @@
-import { PlusSquare, EditPencil, Trash, FloppyDisk, Xmark } from "iconoir-react"
+import { PlusSquare, EditPencil, Trash, FloppyDisk, NavArrowDownSolid, NavArrowUpSolid } from "iconoir-react"
 import { useState } from "react"
 import './style/lootlist.css'
 
@@ -6,6 +6,7 @@ export default function LootList(props: any) {
 
     const [reload, setReload] = useState(false)
     const [mononoke, setMononoke] = useState(props.mononoke)
+    const [toggleHide, setToggleHide] = useState(false)
 
 
     function handleEdit(event: any, item: any) {
@@ -69,11 +70,12 @@ export default function LootList(props: any) {
     function hideLoot() {
         var cardBody = document.getElementById('card-loot-' + mononoke.id)
         cardBody?.classList.toggle('hide')
+        setToggleHide(!toggleHide)
     }
 
     return (
         <div className='card-body-loot'>
-            <h4 onClick={() => hideLoot()}>Loot</h4>
+            <h4 onClick={() => hideLoot()}>Loot {toggleHide ? (<NavArrowDownSolid />) : (<NavArrowUpSolid />)}</h4>
             <div className="mononoke-loot-table hide" id={'card-loot-' + mononoke.id}>
                 <div className="loot-header">
                     <div className="loot-extra">
