@@ -1,9 +1,8 @@
 .dashboard {
     position: relative;
-    margin: 20px;
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
+    width: fit-content;
     overflow: hidden;
     height: fit-content;
 }
