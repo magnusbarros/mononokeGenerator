@@ -5,7 +5,7 @@ import './style/skilllist.css'
 export default function SkillList(props: any) {
 
     const defaultTarget = ['User', 'Item', 'Area', 'Combat Zone', 'Other']
-    const defaultTiming = ['Start', 'Start / Free', 'Start / End', 'Prep', 'Prep / Attack' , 'Attack', 'Free', 'End', 'Constant']
+    const defaultTiming = ['Start', 'Start / Free', 'Start / End', 'Prep', 'Prep / Attack' , 'Attack', 'Defense', 'Free', 'End', 'Constant']
 
     const [mononoke, setMononoke] = useState(props.mononoke)
     const [skillList, setSkillList] = useState(props.mononoke.skills)
@@ -189,7 +189,7 @@ export default function SkillList(props: any) {
                             <p className="data-label">Range:</p>
                         </div>
                         <div className="skill-data-box-content">
-                            <input name="range" type="text" defaultValue={skill.range} onChange={(e) => handleChange(e)} />
+                            <input name="range" type="text" defaultValue={skill.range} onChange={(e) => handleChange(e)} onFocus={(e) => e.target.select()}/>
                         </div>
                     </div>
                     <div className="skill-data-box">
@@ -197,7 +197,7 @@ export default function SkillList(props: any) {
                             <p className="data-label">Target:</p>
                         </div>
                         <div className="skill-data-box-content">
-                            <input name="target" type="text" defaultValue={skill.target} onChange={(e) => handleChange(e)} />
+                            <input name="target" type="text" defaultValue={skill.target} onChange={(e) => handleChange(e)} onFocus={(e) => e.target.select()}/>
                         </div>
                     </div>
                     <div className="skill-data-box">
@@ -205,7 +205,7 @@ export default function SkillList(props: any) {
                             <p className="data-label">Cost:</p>
                         </div>
                         <div className="skill-data-box-content">
-                            <input name="cost" type="text" defaultValue={skill.cost} onChange={(e) => handleChange(e)} />
+                            <input name="cost" type="text" defaultValue={skill.cost} onChange={(e) => handleChange(e)} onFocus={(e) => e.target.select()}/>
                         </div>
                     </div>
                 </div>

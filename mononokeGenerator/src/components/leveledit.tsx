@@ -7,12 +7,18 @@ export default function LevelEdit(props: any) {
     const [mononoke, setMononoke] = useState(props.mononoke)
     const [reload, setReload] = useState(false)
 
-    function handleOnChange(e: any, field: string) {
-        const oldValue = parseInt(mononoke[field]);
-        const newValue = parseInt(e.target.value);
-        const diff = newValue - oldValue;
-        mononoke.xp = parseInt(mononoke.xp) + (diff * 4);
-        setMononoke({ ...mononoke, [field]: e.target.value })
+    function handleOnChange(e: any) {
+
+        const {name, value} = e.target;
+
+        if (name === 'lv') {
+            const oldValue = parseInt(mononoke[name]);
+            const newValue = parseInt(value);
+            const diff = newValue - oldValue;
+            mononoke.xp = parseInt(mononoke.xp) + (diff * 4);
+        }
+        mononoke[name] = value;
+        setMononoke(mononoke)
     }
 
     function handleOnClick(e: any, field: string, value: number) {
@@ -59,7 +65,7 @@ export default function LevelEdit(props: any) {
     function LvInput() {
         return (
             <input type='number' name='lv' defaultValue={mononoke.lv}
-                onChange={(e) => handleOnChange(e, 'lv')} />
+                onChange={(e) => handleOnChange(e)} />
         )
     }
 

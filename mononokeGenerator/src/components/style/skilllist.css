@@ -134,6 +134,7 @@
 .skill-desc p {
     margin: 5px;
     word-break: break-word;
+    white-space: pre-line;
 }
 
 .skill-fluff p {
