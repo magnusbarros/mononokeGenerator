@@ -4,6 +4,6 @@ import Index from './index.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Index/>
+    <Index />
   </StrictMode>,
 )

@@ -148,3 +148,73 @@
 .skill-detail-wrapper.hide{
     display: none;
 }
+
+.skill-db-popup {
+    position: absolute;
+    left: 25px;
+    width: 80%;
+    background-color: white;
+    height: 200px;
+    border: 1px solid;
+    cursor: default;
+}
+
+.skill-db-popup.hide {
+    display: none;
+}
+
+.skill-db-popup-header {
+    background-color: rgb(84, 84, 84);
+    color: white;
+    top: 0;
+}
+
+.skill-db-popup button {
+    margin: 2px;
+}
+
+.skill-db-popup input {
+    margin: 2px;
+
+}
+
+.btn-popup-close {
+    float: right;
+    position: relative;
+    top: -23px;
+    right: 1px;
+    height: 20px;
+    width: 20px;
+    padding: 0;
+}
+
+.btn-popup-close svg {
+    position: relative;
+    top: -2px;
+    left: -1px;
+}
+
+.skill-db-popup-list {
+    overflow-y: scroll;
+    height: 148px;
+    margin: 2px;
+}
+
+.skill-db-item {
+    border: 1px solid;
+    padding: 2px;
+    cursor: pointer;
+    overflow: hidden;
+    height: 24px;
+}
+
+.skill-db-item p{
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 25px;
+}
+
+.skill-db-item:hover {
+    background-color: rgb(160, 160, 160);
+}

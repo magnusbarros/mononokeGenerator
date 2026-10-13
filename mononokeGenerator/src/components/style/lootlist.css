@@ -44,7 +44,8 @@
     position: absolute;
     left: inherit;
     width: 60px;
-    margin-left: 260px;
+    margin-left: 190px;
+    margin-top: 60px;
     background-color: rgba(0, 0, 0, 0.5);
     visibility: hidden;
 }

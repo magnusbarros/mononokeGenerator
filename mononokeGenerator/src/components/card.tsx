@@ -40,7 +40,6 @@ export default function Card(props: any) {
         setMononoke(mononoke)
         setIsEditing(false)
         props.save(mononoke)
-        console.log('Saved changes')
     }
 
     return (
@@ -52,7 +51,8 @@ export default function Card(props: any) {
                         <LevelEdit mononoke={mononoke}
                             isEditing={isEditing} setIsEditing={setIsEditing}
                             handleSaveChanges={handleSaveChanges}
-                            handleRemove={props.remove} />
+                            handleRemove={props.remove}
+                             />
                     </div>
                 </div>
                 <div className='card-body'>
@@ -61,7 +61,7 @@ export default function Card(props: any) {
                     <StatBlock mononoke={mononoke} isEditing={isEditing} />
                     <div className='card-body-data'>
                         <LootList mononoke={mononoke} isEditing={isEditing} />
-                        <SkillList mononoke={mononoke} isEditing={isEditing} />
+                        <SkillList mononoke={mononoke} isEditing={isEditing} isDatabase={false} />
                     </div>
                 </div>
             </div>

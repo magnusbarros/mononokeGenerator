@@ -1,0 +1,72 @@
+.skill-database-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: 100px;
+    width: 100%;
+}
+
+.skill-database-wrapper .skill-add-btn {
+    position: relative;
+    right: 0;
+}
+
+#card-skills-db {
+    max-height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-family: 'Comfortaa';
+}
+
+#card-skills-db .skill-wrapper {
+    width: 340px;
+    height: fit-content;
+}
+
+#card-skills-db .skill-header input {
+    margin-left: 25%;
+}
+
+#card-skills-db .skill-data-box input {
+    margin-left: 10%;
+}
+
+#card-skills-db .skill-data-box .target-select {
+    margin-left: 0;
+    width: 99%;
+}
+
+.import-tooltip {
+    visibility: hidden;
+    top: 0;
+    width: 160px;
+    background-color: rgb(84, 84, 84);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    left: 170px;
+    margin-left: -80px;
+    bottom: 45px;
+    height: fit-content;
+}
+
+.import-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 15%;
+    right: 100%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #555 transparent transparent;
+}
+
+.skill-add-btn.import-skills:hover .import-tooltip {
+    visibility: visible;
+}
