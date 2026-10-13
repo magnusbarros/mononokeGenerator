@@ -181,7 +181,7 @@ export default function SkillList(props: any) {
             if (name === 'range') {
                 if (value === '') {
                     skill[name] = 'User'
-                }
+                } else skill[name] = value
             } else skill[name] = value
             setSkill(skill)
         }
@@ -314,7 +314,7 @@ export default function SkillList(props: any) {
                         }
                     </div>
                 ) : (
-                    <div>
+                    <div className="db-header">
                         <button className="skill-add-btn" onClick={(e) => addSkill(e)}><PlusCircle /></button>
                         <button className="skill-add-btn" onClick={(e) => { setDbEdit(!dbEdit), setReload(true) }}><EditPencil /></button>
                         <button className='skill-add-btn import-skills' style={{ top: '-5.5px' }} onClick={importSkills}>Import Skills <span className='import-tooltip'>Imports the skills from every Mononoke's skill list into the database.</span></button>

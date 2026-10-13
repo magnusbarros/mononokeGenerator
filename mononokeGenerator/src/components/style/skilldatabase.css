@@ -19,6 +19,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     font-family: 'Comfortaa';
+    margin-top: 40px;
 }
 
 #card-skills-db .skill-wrapper {
