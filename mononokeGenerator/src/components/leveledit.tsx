@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { EditPencil, FloppyDisk, Menu, Trash } from 'iconoir-react'
+import { Copy, EditPencil, FloppyDisk, Menu, Trash, RefreshDouble } from 'iconoir-react'
 import './style/leveledit.css'
 
 export default function LevelEdit(props: any) {
@@ -43,6 +43,15 @@ export default function LevelEdit(props: any) {
                                 <Trash height={30} />
                                 <span className='card-delete-tooltip'>Ctrl + Click to Delete</span>
                             </button>
+                            <button className='card-edit-btn' id={'card-copy-' + mononoke.id}
+                                onClick={(e) => {e.stopPropagation(), props.handleCopy(mononoke)}}>
+                                <Copy height={30} />
+                            </button>
+                            <button className='card-edit-btn' id={'card-sync-' + mononoke.id}
+                                onClick={(e) => {e.stopPropagation(), props.handleSync(mononoke)}}>
+                                <RefreshDouble height={30} />
+                                <span className='card-sync-tooltip'>Synchronize skills with the database</span>
+                            </button>
                         </>
                     ) : (
                         <>
@@ -54,6 +63,15 @@ export default function LevelEdit(props: any) {
                                 onClick={(e) => { e.stopPropagation(), e.ctrlKey ? props.handleRemove(mononoke) : null }}>
                                 <Trash height={30} />
                                 <span className='card-delete-tooltip'>Ctrl + Click to Delete</span>
+                            </button>
+                            <button className='card-edit-btn' id={'card-copy-' + mononoke.id}
+                                onClick={(e) => {e.stopPropagation(), props.handleCopy(mononoke)}}>
+                                <Copy height={30} />
+                            </button>
+                            <button className='card-edit-btn' id={'card-sync-' + mononoke.id}
+                                onClick={(e) => {e.stopPropagation(), props.handleSync(mononoke)}}>
+                                <RefreshDouble height={30} />
+                                <span className='card-sync-tooltip'>Synchronize skills with the database</span>
                             </button>
                         </>
                     )
@@ -82,7 +100,7 @@ export default function LevelEdit(props: any) {
         {
             props.isEditing ?
                 (
-                    <p className='card-lv card-lv-expand'>
+                    <div className='card-lv card-lv-expand'>
                         {
                             !reload ? (
                                 <LvInput />
@@ -98,8 +116,8 @@ export default function LevelEdit(props: any) {
                                 e.stopPropagation();
                                 handleOnClick(e, 'lv', parseInt(mononoke.lv) - 1)
                             }} disabled={parseInt(mononoke.lv) <= 1} >−</button>
-                        (Points: {mononoke.xp})
-                    </p>
+                        <p>{'(Points: ' + mononoke.xp + ')'}</p>
+                    </div>
                 )
                 :
                 (

@@ -64,6 +64,10 @@
     position: relative;
     color: white;
     margin-top: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 400px;
+    padding-left: 20px;
 }
 
 .skill-header input {
@@ -74,7 +78,7 @@
 .skill-header .toggle-edit-button {
     position: relative;
     float: right;
-    margin-top: -5px;
+    margin-top: -40px;
     margin-right: 5px;
 }
 
@@ -152,11 +156,13 @@
 .skill-db-popup {
     position: absolute;
     left: 25px;
-    width: 80%;
+    top: -270px;
+    width: 90%;
     background-color: white;
     height: 200px;
     border: 1px solid;
     cursor: default;
+    box-shadow: 1px 2px 8px 2px black;
 }
 
 .skill-db-popup.hide {
@@ -205,14 +211,32 @@
     padding: 2px;
     cursor: pointer;
     overflow: hidden;
-    height: 24px;
+    height: 25px;
+    max-height: 25px;
 }
 
-.skill-db-item p{
-    margin: 0;
+.skill-db-item .skill-data-box {
+    border: 0px;
+    width: 18%;
+}
+
+.skill-db-item .skill-data-box.cost {
+    width: 5%;
+}
+
+.skill-db-item .skill-data-box.db-name-box {
+    width: 40%;
+}
+
+.skill-db-item .skill-data-box-content p {
     overflow: hidden;
     text-overflow: ellipsis;
-    max-height: 25px;
+    white-space: nowrap;
+}
+
+.skill-db-item .skill-data-box-content.db-name p {
+    font-weight: bold;
+    text-align: left;
 }
 
 .skill-db-item:hover {

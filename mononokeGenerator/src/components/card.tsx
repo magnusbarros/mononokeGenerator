@@ -52,6 +52,8 @@ export default function Card(props: any) {
                             isEditing={isEditing} setIsEditing={setIsEditing}
                             handleSaveChanges={handleSaveChanges}
                             handleRemove={props.remove}
+                            handleCopy={props.copy}
+                            handleSync={props.sync}
                              />
                     </div>
                 </div>

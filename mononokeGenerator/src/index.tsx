@@ -50,7 +50,7 @@ export default function Index() {
 
         ],
         skills: [
-            
+
         ]
     }
 
@@ -92,19 +92,40 @@ export default function Index() {
         window.location.href = '/'
     }
 
+    function copyMononoke(mononokeToCopy: any) {
+        var copyMononoke = { ...mononokeToCopy, id: window.crypto.randomUUID() }
+        mononokeList.push(copyMononoke)
+        setMononokeList(mononokeList)
+        save(mononokeList)
+    }
+
+    function syncToDatabase(mononokeToSync: any) {
+        var storedSkills = skillList
+        mononokeToSync.skills.map((skill: any) => {
+            if (storedSkills.find((stored: any) => stored.id === skill.id) === undefined) {
+                storedSkills.push(skill)
+            }
+        })
+
+        setSkillList(storedSkills)
+        if (storedSkills.length > 0) {
+            localStorage.setItem('savedSkills', JSON.stringify(storedSkills))
+        }
+    }
+
     function importSkills() {
-        var newSkills = skillList
+        var storedSkills = skillList
         mononokeList.map((mononoke: any) => {
             mononoke.skills.map((skill: any) => {
-                if (newSkills.find((stored: any) => stored.id === skill.id) === undefined) {
-                    newSkills.push(skill)
+                if (storedSkills.find((stored: any) => stored.id === skill.id) === undefined) {
+                    storedSkills.push(skill)
                 }
             })
         })
 
-        setSkillList(newSkills)
-        if (newSkills.length > 0) {
-            localStorage.setItem('savedSkills', JSON.stringify(newSkills))
+        setSkillList(storedSkills)
+        if (storedSkills.length > 0) {
+            localStorage.setItem('savedSkills', JSON.stringify(storedSkills))
         }
     }
 
@@ -113,7 +134,7 @@ export default function Index() {
             <Sidebar list={mononokeList} addMononoke={addMononoke} setReload={setReload} />
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Dashboard save={save} remove={remove} mononokeList={mononokeList} reload={reload} />} />
+                    <Route path="/" element={<Dashboard save={save} remove={remove} copy={copyMononoke} sync={syncToDatabase} mononokeList={mononokeList} reload={reload} />} />
                     <Route path="database" element={<SkillDatabase savedSkillList={skillList} importSkills={importSkills} />} />
                 </Routes>
             </BrowserRouter>

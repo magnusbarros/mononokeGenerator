@@ -106,13 +106,17 @@
     padding-bottom: 10px;
 }
 
+.mononoke-card .card-header .card-lv p {
+    margin: 0;
+}
+
 .mononoke-card .card-header .card-lv-expand {
-    width: 100px;
+    width: 105px;
     height: 33px;
 }
 
 .mononoke-card .card-header .card-lv input {
-    width: 50%;
+    width: 45%;
     margin-bottom: 2px;
     text-align: center;
 }

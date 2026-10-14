@@ -118,13 +118,12 @@ export default function SkillList(props: any) {
         return (
             <div className="skill-wrapper">
                 <div className="skill-header" onClick={() => hideSkill()}>
-                    <p className="header-title">{skill.name}
-                        {
-                            props.isEditing || dbEdit ? (
-                                <button className="toggle-edit-button" onClick={handleEdit}><EditPencil /></button>
-                            ) : (<></>)
-                        }
-                    </p>
+                    <p className="header-title">{skill.name}</p>
+                    {
+                        props.isEditing || dbEdit ? (
+                            <button className="toggle-edit-button" onClick={handleEdit}><EditPencil /></button>
+                        ) : (<></>)
+                    }
                 </div>
                 <div className="skill-detail-wrapper" id={'card-skill-' + skill.id}>
                     <div className="skill-data">
@@ -304,7 +303,33 @@ export default function SkillList(props: any) {
                                         {
                                             filteredDbSkill?.filter((skill: any) => (mononoke.skills.find((mononokeSkill: any) => (mononokeSkill.id === skill.id))) === undefined).map((skill: any) => (
                                                 <div className="skill-db-item" key={skill.id} onClick={() => handleAddExistingSkill(skill.id)}>
-                                                    <p>{skill.name} ( {skill.timing} / {skill.range} / {skill.target} / {skill.cost !== '' ? skill.cost : 'None'} )</p>
+                                                    <div className="skill-data">
+                                                        <div className="skill-data-box db-name-box">
+                                                            <div className="skill-data-box-content db-name" >
+                                                                <p>{skill.name}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="skill-data-box">
+                                                            <div className="skill-data-box-content">
+                                                                <p>{skill.timing}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="skill-data-box">
+                                                            <div className="skill-data-box-content">
+                                                                <p>{skill.range}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="skill-data-box">
+                                                            <div className="skill-data-box-content">
+                                                                <p>{skill.target}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="skill-data-box cost">
+                                                            <div className="skill-data-box-content">
+                                                                <p>{skill.cost !== '' && skill.cost.toLowerCase() !== 'none' ? skill.cost : ''}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             ))
                                         }

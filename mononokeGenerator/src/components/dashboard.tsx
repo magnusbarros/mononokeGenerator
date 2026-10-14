@@ -17,6 +17,16 @@ export default function Dashboard(props: any) {
         setReload(true)
     }
 
+    function copy(itemToCopy: any) {
+        props.copy(itemToCopy)
+        setReload(true)
+    }
+
+    function sync(itemToSync: any) {
+        props.sync(itemToSync)
+        setReload(true)
+    }
+
     return (
         <div className='dashboard-wrapper'>
             <div className="dashboard" id='dashboard'>
@@ -31,7 +41,9 @@ export default function Dashboard(props: any) {
                                         props.mononokeList : []
                                 }
                                 save={save}
-                                remove={remove} />
+                                remove={remove}
+                                copy={copy}
+                                sync={sync} />
                         )
                         :
                         (
