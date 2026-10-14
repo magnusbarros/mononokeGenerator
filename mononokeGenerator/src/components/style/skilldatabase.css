@@ -9,6 +9,7 @@
 .skill-database-wrapper .skill-add-btn {
     position: relative;
     right: 0;
+    z-index: auto;
 }
 
 #card-skills-db {
@@ -23,7 +24,9 @@
 }
 
 #card-skills-db .skill-wrapper {
-    max-width: 400px;
+    max-width: 50%;
+    min-width: 330px;
+    width: 20%;
     height: fit-content;
 }
 
@@ -51,7 +54,7 @@
     border-radius: 6px;
     padding: 5px 0;
     position: absolute;
-    z-index: 1;
+    z-index: 20;
     left: 170px;
     margin-left: -80px;
     bottom: 45px;
