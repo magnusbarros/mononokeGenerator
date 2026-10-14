@@ -23,7 +23,7 @@
 }
 
 #card-skills-db .skill-wrapper {
-    width: 340px;
+    max-width: 400px;
     height: fit-content;
 }
 
@@ -32,12 +32,13 @@
 }
 
 #card-skills-db .skill-data-box input {
-    margin-left: 10%;
+    margin-left: 25%;
+    margin-right: 25%;
 }
 
 #card-skills-db .skill-data-box .target-select {
-    margin-left: 0;
-    width: 99%;
+    margin-left: 2px;
+    width: 95%;
 }
 
 .import-tooltip {

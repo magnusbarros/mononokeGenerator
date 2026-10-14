@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PlusCircle, FloppyDisk, EditPencil, Trash, NavArrowUpSolid, NavArrowDownSolid, XmarkCircle } from "iconoir-react";
+import { PlusCircle, FloppyDisk, EditPencil, Trash, NavArrowUpSolid, NavArrowDownSolid, XmarkCircle, ExpandLines, CompressLines } from "iconoir-react";
 import './style/skilllist.css'
 
 export default function SkillList(props: any) {
@@ -93,6 +93,19 @@ export default function SkillList(props: any) {
         setFilteredDbSkill(sublist)
     }
 
+    function collapseExpandAll(type: boolean) {
+        var cards = document.getElementsByClassName('skill-detail-wrapper')
+        var index = 0
+        while (index < cards.length) {
+            if (type) {
+                cards[index].classList.add('hide')
+            } else {
+                cards[index].classList.remove('hide')
+            }
+            index++
+        }
+    }
+
     function SkillDisplay(props: any) {
 
         const [skill, setSkill] = useState(props.skill)
@@ -125,7 +138,7 @@ export default function SkillList(props: any) {
                         ) : (<></>)
                     }
                 </div>
-                <div className="skill-detail-wrapper" id={'card-skill-' + skill.id}>
+                <div className={'skill-detail-wrapper ' + (isDatabase ? 'hide' : '')} id={'card-skill-' + skill.id}>
                     <div className="skill-data">
                         <div className="skill-data-box">
                             <div className="skill-data-box-header">
@@ -343,6 +356,8 @@ export default function SkillList(props: any) {
                         <button className="skill-add-btn" onClick={(e) => addSkill(e)}><PlusCircle /></button>
                         <button className="skill-add-btn" onClick={(e) => { setDbEdit(!dbEdit), setReload(true) }}><EditPencil /></button>
                         <button className='skill-add-btn import-skills' style={{ top: '-5.5px' }} onClick={importSkills}>Import Skills <span className='import-tooltip'>Imports the skills from every Mononoke's skill list into the database.</span></button>
+                        <button className="skill-add-btn" onClick={() => collapseExpandAll(false)}><ExpandLines /></button>
+                        <button className="skill-add-btn" onClick={() => collapseExpandAll(true)}><CompressLines /></button>
                     </div>
                 )
             }
