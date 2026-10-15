@@ -3,7 +3,6 @@
     display: flex;
     flex-wrap: wrap;
     width: fit-content;
-    overflow: hidden;
     height: fit-content;
     margin-left: 100px;
 }

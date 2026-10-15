@@ -9,7 +9,7 @@ export default function LevelEdit(props: any) {
 
     function handleOnChange(e: any) {
 
-        const {name, value} = e.target;
+        const { name, value } = e.target;
 
         if (name === 'lv') {
             const oldValue = parseInt(mononoke[name]);
@@ -22,10 +22,26 @@ export default function LevelEdit(props: any) {
     }
 
     function handleOnClick(e: any, field: string, value: number) {
+        e.stopPropagation();
         mononoke.xp = parseInt(mononoke.xp) + ((value - parseInt(mononoke[field])) * 4);
         mononoke.lv = value;
         setMononoke({ ...mononoke, [field]: value })
         setReload(true)
+    }
+
+    function handleRemove(e: any, mononoke: any) {
+        e.stopPropagation()
+        e.ctrlKey ? props.handleRemove(mononoke) : null
+    }
+
+    function handleCopy(e: any, mononoke: any) {
+        e.stopPropagation()
+        props.handleCopy(mononoke)
+    }
+
+    function handleSync(e: any, mononoke: any) {
+        e.stopPropagation()
+        props.handleSync(mononoke)
     }
 
     function Popup() {
@@ -33,49 +49,31 @@ export default function LevelEdit(props: any) {
             <div className='card-popup' id={"card-popup-" + mononoke.id}>
                 {
                     !props.isEditing ? (
-                        <>
-                            <button className='card-edit-btn' id={'card-edit-' + mononoke.id}
-                                onClick={(event) => { event.stopPropagation(), props.setIsEditing(true) }}>
-                                <EditPencil height={30} />
-                            </button>
-                            <button className='card-edit-btn' id={'card-delete-' + mononoke.id}
-                                onClick={(e) => { e.stopPropagation(), e.ctrlKey ? props.handleRemove(mononoke) : null }}>
-                                <Trash height={30} />
-                                <span className='card-delete-tooltip'>Ctrl + Click to Delete</span>
-                            </button>
-                            <button className='card-edit-btn' id={'card-copy-' + mononoke.id}
-                                onClick={(e) => {e.stopPropagation(), props.handleCopy(mononoke)}}>
-                                <Copy height={30} />
-                            </button>
-                            <button className='card-edit-btn' id={'card-sync-' + mononoke.id}
-                                onClick={(e) => {e.stopPropagation(), props.handleSync(mononoke)}}>
-                                <RefreshDouble height={30} />
-                                <span className='card-sync-tooltip'>Synchronize skills with the database</span>
-                            </button>
-                        </>
+                        <button className='card-edit-btn' id={'card-edit-' + mononoke.id}
+                            onClick={(event) => { event.stopPropagation(), props.setIsEditing(true) }}>
+                            <EditPencil height={30} />
+                        </button>
                     ) : (
-                        <>
-                            <button className='card-edit-btn' id={'card-save-' + mononoke.id}
-                                onClick={(event) => { event.stopPropagation(), props.handleSaveChanges() }}>
-                                <FloppyDisk height={30} />
-                            </button>
-                            <button className='card-edit-btn' id={'card-delete-' + mononoke.id}
-                                onClick={(e) => { e.stopPropagation(), e.ctrlKey ? props.handleRemove(mononoke) : null }}>
-                                <Trash height={30} />
-                                <span className='card-delete-tooltip'>Ctrl + Click to Delete</span>
-                            </button>
-                            <button className='card-edit-btn' id={'card-copy-' + mononoke.id}
-                                onClick={(e) => {e.stopPropagation(), props.handleCopy(mononoke)}}>
-                                <Copy height={30} />
-                            </button>
-                            <button className='card-edit-btn' id={'card-sync-' + mononoke.id}
-                                onClick={(e) => {e.stopPropagation(), props.handleSync(mononoke)}}>
-                                <RefreshDouble height={30} />
-                                <span className='card-sync-tooltip'>Synchronize skills with the database</span>
-                            </button>
-                        </>
+                        <button className='card-edit-btn' id={'card-save-' + mononoke.id}
+                            onClick={(event) => { event.stopPropagation(), props.handleSaveChanges() }}>
+                            <FloppyDisk height={30} />
+                        </button>
                     )
                 }
+                <button className='card-edit-btn' id={'card-delete-' + mononoke.id}
+                    onClick={(e) => { handleRemove(e, mononoke) }}>
+                    <Trash height={30} />
+                    <span className='card-delete-tooltip'>Ctrl + Click to Delete</span>
+                </button>
+                <button className='card-edit-btn' id={'card-copy-' + mononoke.id}
+                    onClick={(e) => { handleCopy(e, mononoke) }}>
+                    <Copy height={30} />
+                </button>
+                <button className='card-edit-btn' id={'card-sync-' + mononoke.id}
+                    onClick={(e) => { handleSync(e, mononoke) }}>
+                    <RefreshDouble height={30} />
+                    <span className='card-sync-tooltip'>Synchronize Talents with the database</span>
+                </button>
             </div>
         )
     }
@@ -108,12 +106,10 @@ export default function LevelEdit(props: any) {
                         }
                         <button onClick={
                             (e) => {
-                                e.stopPropagation();
                                 handleOnClick(e, 'lv', parseInt(mononoke.lv) + 1)
                             }}>+</button>
                         <button onClick={
                             (e) => {
-                                e.stopPropagation();
                                 handleOnClick(e, 'lv', parseInt(mononoke.lv) - 1)
                             }} disabled={parseInt(mononoke.lv) <= 1} >−</button>
                         <p>{'(Points: ' + mononoke.xp + ')'}</p>

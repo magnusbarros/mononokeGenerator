@@ -23,7 +23,7 @@ export default function WeaknessInfoBlock(props: any) {
             } else currentMononoke[name] = parseInt(value);
         } else if (type === 'ident') {
             if (value === '' || value === null) {
-                currentMononoke[type] = 6 + currentMononoke.lv * 2
+                currentMononoke[type] = 6 + parseInt(currentMononoke.lv) * 2
             } else currentMononoke[name] = parseInt(value);
         } else if (type === 'weaknesses') {
             if (currentMononoke[type].includes(value)) {
@@ -51,14 +51,16 @@ export default function WeaknessInfoBlock(props: any) {
                     <li>Size: {props.isEditing ? (
                         <input type='text' name='size'
                             defaultValue={mononoke.size}
-                            onChange={(e) => handleOnChange(e, 'size')} />
+                            onChange={(e) => handleOnChange(e, 'size')}
+                            onFocus={(e) => e.target.select()} />
                     ) : (
                         mononoke.size
                     )}</li>
                     <li>ID: {props.isEditing ? (
                         <input type='text' name='ident'
                             defaultValue={mononoke.ident}
-                            onChange={(e) => handleOnChange(e, 'ident')} />
+                            onChange={(e) => handleOnChange(e, 'ident')}
+                            onFocus={(e) => e.target.select()} />
                     ) : (
                         mononoke.ident
                     )}</li>

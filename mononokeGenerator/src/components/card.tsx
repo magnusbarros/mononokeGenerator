@@ -20,7 +20,7 @@ export default function Card(props: any) {
     }
 
     const [mononoke, setMononoke] = useState(props.mononoke)
-
+    const [display, setDisplay] = useState(processStatChanges())
     const [isEditing, setIsEditing] = useState(false)
 
     function hideCard(cardId: string | number) {
@@ -36,9 +36,33 @@ export default function Card(props: any) {
         }
     }
 
+    function processStatChanges(): any {
+        try {
+            var display = { ...mononoke }
+
+            display.skills.forEach((skill: any) => {
+                var commands = skill.description.match(/```([^```*```]+)```/g)
+                commands?.forEach((cmd: string) => {
+                    var values = [...cmd.matchAll(/\'([^'*']+)\'/g)]
+
+                    var stat = values[0][1].toString()
+                    var val = values[1][1].toString()
+
+                    display = { ...display, 'stats': { ...display.stats, [stat]: (parseInt(display.stats[stat]) + parseInt(val)) } }
+                })
+            })
+            return display
+        } catch (e) {
+            console.log(e)
+            return mononoke
+        }
+    }
+
     function handleSaveChanges() {
         setMononoke(mononoke)
         setIsEditing(false)
+        var newDisplay = processStatChanges().stats
+        setDisplay({...mononoke, stats: newDisplay})
         props.save(mononoke)
     }
 
@@ -54,13 +78,13 @@ export default function Card(props: any) {
                             handleRemove={props.remove}
                             handleCopy={props.copy}
                             handleSync={props.sync}
-                             />
+                        />
                     </div>
                 </div>
                 <div className='card-body'>
                     <WeaknessInfoBlock mononoke={mononoke} isEditing={isEditing} />
                     <InfoBlock mononoke={mononoke} isEditing={isEditing} defaultValues={defaultValues} />
-                    <StatBlock mononoke={mononoke} isEditing={isEditing} />
+                    <StatBlock mononoke={mononoke} display={display.stats} isEditing={isEditing} />
                     <div className='card-body-data'>
                         <LootList mononoke={mononoke} isEditing={isEditing} />
                         <SkillList mononoke={mononoke} isEditing={isEditing} isDatabase={false} />
