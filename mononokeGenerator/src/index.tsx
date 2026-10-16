@@ -130,7 +130,7 @@ export default function Index() {
     }
 
     return (
-        <div className='index-wrapper'>
+        <div className='index-wrapper' onLoad={() => {localStorage.setItem('isEdit', 'false')}}>
             <Sidebar list={mononokeList} addMononoke={addMononoke} setReload={setReload} />
             <BrowserRouter>
                 <Routes>

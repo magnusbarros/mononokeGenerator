@@ -35,13 +35,23 @@ export default function StatBlock(props: any) {
         setReload(true)
     }
 
+    function setStep(e: any) {
+        if (e.shiftKey) {
+            e.target.step = 10
+        } else {
+            e.target.step = 1
+        }
+    }
+
     return (
         !reload ? (<div className='card-body-stats'>
             <div className='card-body-stats-main'>
                 <div className='hp'>
                     <p>HP:<br />{props.isEditing ? (
                         <input type='number' name='hp' defaultValue={mononoke.stats.hp}
-                            onChange={(e) => handleOnChange(e)} />
+                            onChange={(e) => handleOnChange(e)}
+                            onFocus={(e) => e.target.select()}
+                            onClick={(e) => setStep(e)} />
                     ) : (
                         displayStats.hp
                     )}</p>
@@ -50,7 +60,9 @@ export default function StatBlock(props: any) {
                     <p>Guard:<br />{props.isEditing ? (
                         <input type='number' name='guard'
                             defaultValue={mononoke.stats.guard}
-                            onChange={(e) => handleOnChange(e)} />
+                            onChange={(e) => handleOnChange(e)}
+                            onFocus={(e) => e.target.select()}
+                            onClick={(e) => setStep(e)} />
                     ) : (
                         displayStats.guard
                     )}</p>
@@ -59,16 +71,20 @@ export default function StatBlock(props: any) {
                     <p>Ward:<br />{props.isEditing ? (
                         <input type='number' name='ward'
                             defaultValue={mononoke.stats.ward}
-                            onChange={(e) => handleOnChange(e)} />
+                            onChange={(e) => handleOnChange(e)}
+                            onFocus={(e) => e.target.select()}
+                            onClick={(e) => setStep(e)} />
                     ) : (
                         displayStats.ward
                     )}</p>
                 </div>
                 <div className='init'>
-                    <p>Init:<br />{props.isEditing ? (
+                    <p>Init.:<br />{props.isEditing ? (
                         <input type='number' name='init'
                             defaultValue={mononoke.stats.init}
-                            onChange={(e) => handleOnChange(e)} />
+                            onChange={(e) => handleOnChange(e)}
+                            onFocus={(e) => e.target.select()}
+                            onClick={(e) => setStep(e)} />
                     ) : (
                         displayStats.init
                     )}</p>
@@ -77,7 +93,9 @@ export default function StatBlock(props: any) {
                     <p>Speed:<br />{props.isEditing ? (
                         <input type='number' name='speed'
                             defaultValue={mononoke.stats.speed}
-                            onChange={(e) => handleOnChange(e)} />
+                            onChange={(e) => handleOnChange(e)}
+                            onFocus={(e) => e.target.select()}
+                            onClick={(e) => setStep(e)} />
                     ) : (
                         displayStats.speed
                     )}</p>
@@ -88,7 +106,9 @@ export default function StatBlock(props: any) {
                     <p>Acc.:<br />{props.isEditing ? (
                         <input type='number' name='acc'
                             defaultValue={mononoke.stats.acc}
-                            onChange={(e) => handleOnChange(e)} />
+                            onChange={(e) => handleOnChange(e)}
+                            onFocus={(e) => e.target.select()}
+                            onClick={(e) => setStep(e)} />
                     ) : (
                         <>{displayStats.acc}<br />{displayStats.acc + 7}</>
                     )}</p>
@@ -97,7 +117,9 @@ export default function StatBlock(props: any) {
                     <p>Eva.:<br />{props.isEditing ? (
                         <input type='number' name='eva'
                             defaultValue={mononoke.stats.eva}
-                            onChange={(e) => handleOnChange(e)} />
+                            onChange={(e) => handleOnChange(e)}
+                            onFocus={(e) => e.target.select()}
+                            onClick={(e) => setStep(e)} />
                     ) : (
                         <>{displayStats.eva}<br />{displayStats.eva + 7}</>
                     )}</p>
@@ -106,7 +128,9 @@ export default function StatBlock(props: any) {
                     <p>Inv.:<br />{props.isEditing ? (
                         <input type='number' name='inv'
                             defaultValue={mononoke.stats.inv}
-                            onChange={(e) => handleOnChange(e)} />
+                            onChange={(e) => handleOnChange(e)}
+                            onFocus={(e) => e.target.select()}
+                            onClick={(e) => setStep(e)} />
                     ) : (
                         <>{displayStats.inv}<br />{displayStats.inv + 7}</>
                     )}</p>
@@ -115,7 +139,9 @@ export default function StatBlock(props: any) {
                     <p>Res.:<br />{props.isEditing ? (
                         <input type='number' name='res'
                             defaultValue={mononoke.stats.res}
-                            onChange={(e) => handleOnChange(e)} />
+                            onChange={(e) => handleOnChange(e)}
+                            onFocus={(e) => e.target.select()}
+                            onClick={(e) => setStep(e)} />
                     ) : (
                         <>{displayStats.res}<br />{displayStats.res + 7}</>
                     )}</p>
@@ -124,12 +150,14 @@ export default function StatBlock(props: any) {
                     <p>Chk.:<br />{props.isEditing ? (
                         <input type='number' name='chk'
                             defaultValue={mononoke.stats.chk}
-                            onChange={(e) => handleOnChange(e)} />
+                            onChange={(e) => handleOnChange(e)}
+                            onFocus={(e) => e.target.select()}
+                            onClick={(e) => setStep(e)} />
                     ) : (
                         <>{displayStats.chk}<br />{displayStats.chk + 7}</>
                     )}</p>
                 </div>
             </div>
-        </div>) : (<>{setReload(false)}</>)
+        </div>) : setReload(false)
     )
 }

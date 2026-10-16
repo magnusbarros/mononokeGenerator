@@ -44,3 +44,91 @@
 .card-edit-btn:hover .card-sync-tooltip {
     visibility: visible;
 }
+
+input[type=number].lv-input { 
+    -moz-appearance: textfield;
+    appearance: textfield;
+    margin: 0; 
+}
+
+.mononoke-card .card-header .card-lv-label {
+    float: right;
+    margin: 5px;
+    padding: 10px;
+}
+
+.mononoke-card .card-header .card-lv {
+    float: right;
+    margin: 5px;
+    background-color: white;
+    color: black;
+    text-align: center;
+    width: 80px;
+    height: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.mononoke-card .card-header .card-lv p {
+    margin: 0;
+}
+
+.mononoke-card .card-header h2.card-lv {
+    font-size: 30px;
+}
+
+.mononoke-card .card-header .card-lv-expand {
+    display: flex;
+    flex-wrap: wrap;
+    width: 105px;
+    height: 30px;
+}
+
+.mononoke-card .card-header .card-lv input {
+    width: 72px;
+    height: 45px;
+    margin-top: -10px;
+    text-align: center;
+    font-size: 30px;
+}
+
+.card-lv button {
+    position: relative;
+    height: 25px;
+    width: 25px;
+    text-align: center;
+}
+
+.lv-btn-wrapper {
+    position: relative;
+    margin-top: -10px;
+}
+
+.card-popup {
+    z-index: 3;
+    position: absolute;
+    left: inherit;
+    width: 60px;
+    margin-top: 60px;
+    background-color: rgba(0, 0, 0, 0.5);
+    visibility: hidden;
+    right: 0;
+}
+
+.card-popup.show {
+    visibility: visible;
+}
+
+.card-type-popup {
+    position: absolute;
+    margin-top: 60px;
+    height: 80px;
+    width: 350px;
+    background-color: rgba(0, 0, 0, 0.7);
+    visibility: hidden;
+    overflow-y: scroll;
+}
+
+.lv-edit-wrapper {
+    position: relative;
+}

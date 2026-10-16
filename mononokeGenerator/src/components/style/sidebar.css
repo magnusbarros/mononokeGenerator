@@ -40,3 +40,64 @@
     color: black;
     text-decoration: none;
 }
+
+.sidebar-options {
+    position: absolute;
+    bottom: 50px;
+    left: 35px;
+    background-color: lightgray;
+    border: none;
+    cursor: pointer;
+}
+
+.options-popup {
+    position: relative;
+    margin-left: 50vh;
+    margin-top: 25vh;
+    background-color: white;
+    width: 400px;
+    height: fit-content;
+    padding: 10px;
+    border: 2px solid;
+    box-shadow: 1px 2px 5px 0px black;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.options-popup.hide {
+    display: none;
+}
+
+.options-header {
+    text-align: center;
+    font-family: Comfortaa;
+}
+
+
+.options-header h1 {
+    margin: 2px;
+}
+
+.options-header h4 {
+    margin: 5px;
+}
+
+.options-header h5 {
+    margin: 2px;
+}
+
+.options-header p {
+    margin: 1px;
+    font-size: 8px;
+}
+
+.options-menu {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.options-btn {
+    margin-top: 5px;
+}

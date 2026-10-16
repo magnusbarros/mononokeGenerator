@@ -112,6 +112,12 @@ export default function SkillList(props: any) {
         }
     }
 
+    function handleDbEdit() {
+        localStorage.setItem('isEdit', (!dbEdit).toString())
+        setDbEdit(!dbEdit)
+        setReload(true)
+    }
+
     function SkillDisplay(props: any) {
 
         const [skill, setSkill] = useState(props.skill)
@@ -126,6 +132,7 @@ export default function SkillList(props: any) {
 
             setSkill(skill)
             setSkillList(skillList)
+            localStorage.setItem('isEdit', 'true')
             setReload(true)
         }
 
@@ -134,23 +141,96 @@ export default function SkillList(props: any) {
             cardBody?.classList.toggle('hide')
         }
 
+        // Source - https://stackoverflow.com/a/1026087
+        // Posted by Steve Harrison, modified by community. See post 'Timeline' for change history
+        // Retrieved 2026-10-16, License - CC BY-SA 4.0
+
+        function capitalizeFirstLetter(val) {
+            return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+        }
+
         function displaySkillText(text: string): string {
             try {
                 var display = text
 
-                var commands = text.match(/```([^```*```]+)```/g)
+                var commands = text.match(/```([^```]+)```/g)
                 commands?.forEach((cmd: string) => {
-                    var values = [...cmd.matchAll(/\'([^'*']+)\'/g)]
+                    var command = cmd !== null ? cmd : ''
+                    var values = command.match(/\'([^'']+)\'/g)
 
-                    var stat = values[0][1].toString()
-                    var val = values[1][1].toString()
+                    if (values !== null && mononoke.stats !== undefined) {
+                        if (values.length > 1) {
+                            var stat = values[0].replaceAll("'", "").toString()
+                            var val = values[1].replaceAll("'", "").toString()
 
-                    display = display.replace(cmd, '<span>' + val + ' ' + stat +'</span>')
+                            var abvStat = ['acc', 'eva', 'inv', 'res', 'chk', 'init']
+                            if (abvStat.includes(stat)) {
+                                stat = stat + '.'
+                            }
+
+                            display = display.replace(cmd, '<span>' + capitalizeFirstLetter(val.replace('@', '')) + ' ' + capitalizeFirstLetter(stat.replace('@', '')) + '</span>')
+                        } else {
+                            var stat = values[0].replaceAll("'", "").toString()
+                            var calcType = stat.match(/(\+|\-|\/|\*)/g)
+                            if (calcType !== null) {
+                                var calcVal = 0
+                                var parsedStat = 0
+
+                                var multStats = stat.match(/\@(\D+)[\+\-\/\*]@(\D+)/)
+                                if (multStats === null) {
+                                    var statName = stat.match(/\@(\D+)([\+\-\/\*])/)[1]
+                                    parsedStat = parseInt(mononoke.stats[statName])
+                                    calcVal = parseInt(values[0].match(/(\d+)/g)[0])
+                                }
+
+                                switch (calcType[0]) {
+                                    case '+':
+                                        if (multStats === null) {
+                                            stat = calcVal + parsedStat
+                                        } else {
+                                            stat = parseInt(mononoke.stats[multStats[1]]) + parseInt(mononoke.stats[multStats[2]])
+                                        }
+                                        break;
+                                    case '-':
+                                        if (multStats === null) {
+                                            stat = calcVal - parsedStat
+                                        } else {
+                                            stat = parseInt(mononoke.stats[multStats[1]]) - parseInt(mononoke.stats[multStats[2]])
+                                        }
+                                        break;
+                                    case '/':
+                                        if (multStats === null) {
+                                            stat = calcVal / parsedStat
+                                        } else {
+                                            stat = parseInt(mononoke.stats[multStats[1]]) / parseInt(mononoke.stats[multStats[2]])
+                                        }
+                                        break;
+                                    case '*':
+                                        if (multStats === null) {
+                                            stat = calcVal * parsedStat
+                                        } else {
+                                            stat = parseInt(mononoke.stats[multStats[1]]) * parseInt(mononoke.stats[multStats[2]])
+                                        }
+                                        break;
+                                    default:
+                                        if (multStats === null) {
+                                            stat = calcVal + parsedStat
+                                        } else {
+                                            stat = parseInt(mononoke.stats[multStats[1]]) + parseInt(mononoke.stats[multStats[2]])
+                                        }
+                                }
+                                display = display.replace(cmd, '<span>' + stat + '</span>')
+                            } else {
+                                display = display.replace(cmd, '<span>' + mononoke.stats[stat.replace('@', '')] + '</span>')
+                            }
+                        }
+                    }
+
                 })
                 return display
             } catch (e) {
                 console.log(e)
-                return ''
+                return '<span style="color: red;">There was a problem parsing the variables in the description, please check the console for details.</span>'
             }
         }
 
@@ -203,7 +283,7 @@ export default function SkillList(props: any) {
                         <p>{skill.fluff}</p>
                     </div>
                     <div className="skill-desc">
-                        <div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize('<p>' + displaySkillText(skill.description) + '</p>')}} />
+                        <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize('<p>' + displaySkillText(skill.description) + '</p>') }} />
                     </div>
                 </div>
             </div>
@@ -235,6 +315,7 @@ export default function SkillList(props: any) {
             mononoke['skills'] = skillList
             setMononoke(mononoke)
             if (isDatabase) {
+                localStorage.setItem('isEdit', 'false')
                 props.saveDatabase(skillList)
             }
             setReload(true)
@@ -376,7 +457,7 @@ export default function SkillList(props: any) {
                 ) : (
                     <div className="db-header">
                         <button className="skill-add-btn" onClick={(e) => addSkill(e)}><PlusCircle /></button>
-                        <button className="skill-add-btn" onClick={() => { setDbEdit(!dbEdit), setReload(true) }}><EditPencil /></button>
+                        <button className="skill-add-btn" onClick={handleDbEdit}>{!dbEdit ? (<EditPencil />) : (<XmarkCircle />)}</button>
                         <button className='skill-add-btn import-skills' style={{ top: '-5.5px' }} onClick={importSkills}>Import Talents <span className='import-tooltip'>Imports Talents from every Mononoke's Talent list into the Database.</span></button>
                         <button className="skill-add-btn" onClick={() => collapseExpandAll(false)}><ExpandLines /></button>
                         <button className="skill-add-btn" onClick={() => collapseExpandAll(true)}><CompressLines /></button>

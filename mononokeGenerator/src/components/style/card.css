@@ -87,40 +87,6 @@
     padding: 2px;
 }
 
-
-.mononoke-card .card-header .card-lv-label {
-    float: right;
-    margin: 5px;
-    padding: 10px;
-}
-
-.mononoke-card .card-header .card-lv {
-    float: right;
-    margin: 5px;
-    background-color: white;
-    color: black;
-    text-align: center;
-    width: 80px;
-    height: 100%;
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-.mononoke-card .card-header .card-lv p {
-    margin: 0;
-}
-
-.mononoke-card .card-header .card-lv-expand {
-    width: 105px;
-    height: 33px;
-}
-
-.mononoke-card .card-header .card-lv input {
-    width: 45%;
-    margin-bottom: 2px;
-    text-align: center;
-}
-
 .mononoke-card .card-header .card-class {
     float: left;
     position: absolute;

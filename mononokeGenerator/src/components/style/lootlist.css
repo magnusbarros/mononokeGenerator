@@ -39,31 +39,6 @@
     width: 80%;
 }
 
-.card-popup {
-    z-index: 3;
-    position: absolute;
-    left: inherit;
-    width: 60px;
-    margin-left: 190px;
-    margin-top: 60px;
-    background-color: rgba(0, 0, 0, 0.5);
-    visibility: hidden;
-}
-
-.card-popup.show {
-    visibility: visible;
-}
-
-.card-type-popup {
-    position: absolute;
-    margin-top: 60px;
-    height: 80px;
-    width: 350px;
-    background-color: rgba(0, 0, 0, 0.7);
-    visibility: hidden;
-    overflow-y: scroll;
-}
-
 .mononoke-loot-table {
     min-height: fit-content;
 }

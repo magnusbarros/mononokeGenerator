@@ -44,13 +44,19 @@ export default function LevelEdit(props: any) {
         props.handleSync(mononoke)
     }
 
+    function handleEdit(e: any, state: boolean) {
+        e.stopPropagation()
+        localStorage.setItem('isEdit', state.toString())
+        props.setIsEditing(state)
+    }
+
     function Popup() {
         return (
             <div className='card-popup' id={"card-popup-" + mononoke.id}>
                 {
                     !props.isEditing ? (
                         <button className='card-edit-btn' id={'card-edit-' + mononoke.id}
-                            onClick={(event) => { event.stopPropagation(), props.setIsEditing(true) }}>
+                            onClick={(event) => { handleEdit(event, true) }}>
                             <EditPencil height={30} />
                         </button>
                     ) : (
@@ -80,12 +86,12 @@ export default function LevelEdit(props: any) {
 
     function LvInput() {
         return (
-            <input type='number' name='lv' defaultValue={mononoke.lv}
+            <input type='number' className='lv-input' name='lv' defaultValue={mononoke.lv}
                 onChange={(e) => handleOnChange(e)} />
         )
     }
 
-    return (<>
+    return (<div className='lv-edit-wrapper'>
         <Popup />
         <button className='card-edit-btn'
             id={'card-edit-btn-' + mononoke.id}
@@ -104,15 +110,17 @@ export default function LevelEdit(props: any) {
                                 <LvInput />
                             ) : (<>{setReload(false)}</>)
                         }
-                        <button onClick={
-                            (e) => {
-                                handleOnClick(e, 'lv', parseInt(mononoke.lv) + 1)
-                            }}>+</button>
-                        <button onClick={
-                            (e) => {
-                                handleOnClick(e, 'lv', parseInt(mononoke.lv) - 1)
-                            }} disabled={parseInt(mononoke.lv) <= 1} >−</button>
-                        <p>{'(Points: ' + mononoke.xp + ')'}</p>
+                        <div className='lv-btn-wrapper'>
+                            <button onClick={
+                                (e) => {
+                                    handleOnClick(e, 'lv', (e.shiftKey ? parseInt(mononoke.lv) + 10 : parseInt(mononoke.lv) + 1))
+                                }}>+</button>
+                            <br />
+                            <button onClick={
+                                (e) => {
+                                    handleOnClick(e, 'lv', (e.shiftKey ? parseInt(mononoke.lv) - 10 : parseInt(mononoke.lv) - 1))
+                                }} disabled={parseInt(mononoke.lv) <= 1} >−</button>
+                        </div>
                     </div>
                 )
                 :
@@ -121,5 +129,5 @@ export default function LevelEdit(props: any) {
                 )
         }
         <h2 className='card-lv-label'>LV:</h2>
-    </>)
+    </div>)
 }

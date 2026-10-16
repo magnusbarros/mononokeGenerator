@@ -43,12 +43,34 @@ export default function Card(props: any) {
             display.skills.forEach((skill: any) => {
                 var commands = skill.description.match(/```([^```*```]+)```/g)
                 commands?.forEach((cmd: string) => {
-                    var values = [...cmd.matchAll(/\'([^'*']+)\'/g)]
-
-                    var stat = values[0][1].toString()
-                    var val = values[1][1].toString()
-
-                    display = { ...display, 'stats': { ...display.stats, [stat]: (parseInt(display.stats[stat]) + parseInt(val)) } }
+                    var command = cmd !== null ? cmd : ''
+                    var values = command.match(/\'([^'*']+)\'/g)
+                    if (values !== null && values.length > 1) {
+                    var stat = values[0].replaceAll("'", "").toString()
+                    var val = values[1].replaceAll("'", "").toString()
+                        if (val.includes('@')) {
+                            var statToCalc = parseInt(display.stats[val.match(/\@(\w*[^\+])\+/)[1]])
+                            var calcType = val.match(/(\+|\-|\/|\*)/g)[0].toString()
+                            var calcVal = parseInt(val.match(/(\d+)/g)[0])
+                            switch (calcType) {
+                                case '+':
+                                    val = (statToCalc + calcVal).toString()
+                                    break;
+                                case '-':
+                                    val = (statToCalc - calcVal).toString()
+                                    break;
+                                case '/':
+                                    val = (statToCalc / calcVal).toString()
+                                    break;
+                                case '*':
+                                    val = (statToCalc * calcVal).toString()
+                                    break;
+                                default:
+                                    val = (statToCalc + calcVal).toString()
+                            }
+                        }
+                        display = { ...display, 'stats': { ...display.stats, [stat]: (parseInt(display.stats[stat]) + parseInt(val)) } }
+                    }
                 })
             })
             return display
@@ -62,7 +84,8 @@ export default function Card(props: any) {
         setMononoke(mononoke)
         setIsEditing(false)
         var newDisplay = processStatChanges().stats
-        setDisplay({...mononoke, stats: newDisplay})
+        setDisplay({ ...mononoke, stats: newDisplay })
+        localStorage.setItem('isEdit', 'false')
         props.save(mononoke)
     }
 
