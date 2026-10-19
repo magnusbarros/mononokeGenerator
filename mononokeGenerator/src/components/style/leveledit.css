@@ -11,6 +11,7 @@
     left: 50%;
     margin-left: -80px;
     bottom: 170px;
+    font-size: 12px;
 }
 
 .card-sync-tooltip {
@@ -26,6 +27,7 @@
     left: 50%;
     margin-left: -80px;
     bottom: 56px;
+    font-size: 12px;
 }
 
 .card-delete-tooltip::after,
@@ -40,8 +42,8 @@
     border-color: rgb(84, 84, 84) transparent transparent transparent;
 }
 
-.card-edit-btn:hover .card-delete-tooltip,
-.card-edit-btn:hover .card-sync-tooltip {
+.card-edit-btn:hover+.card-delete-tooltip,
+.card-edit-btn:hover+.card-sync-tooltip {
     visibility: visible;
 }
 

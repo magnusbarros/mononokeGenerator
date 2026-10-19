@@ -46,6 +46,8 @@
 
 .import-tooltip {
     visibility: hidden;
+    font-family: Comfortaa;
+    font-size: 12px;
     top: 0;
     width: 160px;
     background-color: rgb(84, 84, 84);
@@ -55,10 +57,37 @@
     padding: 5px 0;
     position: absolute;
     z-index: 20;
-    left: 170px;
-    margin-left: -80px;
+    left: 287px;
     bottom: 45px;
     height: fit-content;
+}
+
+.delete-talent-tooltip {
+    visibility: hidden;
+    font-family: Comfortaa;
+    font-size: 12px;
+    top: 8px;
+    right: 78px;
+    width: 160px;
+    background-color: rgb(106, 106, 106);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 20;
+    height: fit-content;
+}
+
+.delete-talent-tooltip::after{
+    content: '';
+    position: absolute;
+    top: 28%;
+    left: 103%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent rgb(106, 106, 106);
 }
 
 .import-tooltip::after {
@@ -72,6 +101,11 @@
     border-color: transparent #555 transparent transparent;
 }
 
-.skill-add-btn.import-skills:hover .import-tooltip {
+.skill-add-btn.import-skills:hover+.import-tooltip,
+.delete-talent:hover+.delete-talent-tooltip  {
     visibility: visible;
+}
+
+#db-edit-btn.toggle {
+    background-color: gray;
 }

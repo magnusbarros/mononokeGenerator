@@ -69,8 +69,8 @@ export default function LevelEdit(props: any) {
                 <button className='card-edit-btn' id={'card-delete-' + mononoke.id}
                     onClick={(e) => { handleRemove(e, mononoke) }}>
                     <Trash height={30} />
-                    <span className='card-delete-tooltip'>Ctrl + Click to Delete</span>
                 </button>
+                <span className='card-delete-tooltip'>Ctrl + Click to Delete</span>
                 <button className='card-edit-btn' id={'card-copy-' + mononoke.id}
                     onClick={(e) => { handleCopy(e, mononoke) }}>
                     <Copy height={30} />
@@ -78,8 +78,8 @@ export default function LevelEdit(props: any) {
                 <button className='card-edit-btn' id={'card-sync-' + mononoke.id}
                     onClick={(e) => { handleSync(e, mononoke) }}>
                     <RefreshDouble height={30} />
-                    <span className='card-sync-tooltip'>Synchronize Talents with the database</span>
                 </button>
+                <span className='card-sync-tooltip'>Synchronize Talents with the database</span>
             </div>
         )
     }

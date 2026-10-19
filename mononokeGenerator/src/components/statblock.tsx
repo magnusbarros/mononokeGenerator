@@ -5,7 +5,6 @@ export default function StatBlock(props: any) {
     const [mononoke, setMononoke] = useState(props.mononoke)
     const [displayStats, setDisplayStats] = useState(props.display)
     const [reload, setReload] = useState(false)
-    //console.log(displayStats)
 
     function handleOnChange(e: any) {
 

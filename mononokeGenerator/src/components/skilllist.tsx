@@ -13,16 +13,7 @@ export default function SkillList(props: any) {
     const [toggleHide, setToggleHide] = useState(false)
     const isDatabase = props.isDatabase
     const [dbEdit, setDbEdit] = useState(false)
-    const dbSkills = callDatabase()
-    const [filteredDbSkill, setFilteredDbSkill] = useState(
-        dbSkills.sort(function (a: any, b: any) {
-            let x = a.name.toLowerCase();
-            let y = b.name.toLowerCase();
-            if (x < y) { return -1; }
-            if (x > y) { return 1; }
-            return 0;
-        })
-    )
+    const [dbPopup, displayDbPopup] = useState(false)
 
     const emptySkill = {
         id: '',
@@ -58,8 +49,8 @@ export default function SkillList(props: any) {
         setToggleHide(!toggleHide)
     }
 
-    function toggleDbPopup(e: any, id: string) {
-        document.getElementById('skill-db-popup-' + id)?.classList.toggle('hide')
+    function toggleDbPopup() {
+        displayDbPopup(!dbPopup)
     }
 
     function callDatabase() {
@@ -70,33 +61,9 @@ export default function SkillList(props: any) {
         )
     }
 
-    function handleAddExistingSkill(e: any, id: string) {
-        dbSkills.map((listSkill: any) => {
-            if (listSkill.id === id && mononoke.skills.find((skill: any) => skill.id === id) === undefined) {
-                mononoke.skills.push(listSkill)
-            }
-        })
-        setMononoke(mononoke)
-        setSkillList(mononoke.skills)
-        toggleDbPopup(e, mononoke.id)
-        setReload(true)
-    }
-
     function importSkills() {
         props.importSkills()
         setReload(true)
-    }
-
-    function filterDbSkill(e: any) {
-        const { name, value } = e.target
-        var sublist = []
-
-        dbSkills?.map((skill: any) => {
-            if (skill.name.toLowerCase().includes(value.toLowerCase())) {
-                sublist.push(skill)
-            }
-        })
-        setFilteredDbSkill(sublist)
     }
 
     function collapseExpandAll(type: boolean) {
@@ -114,6 +81,7 @@ export default function SkillList(props: any) {
 
     function handleDbEdit() {
         localStorage.setItem('isEdit', (!dbEdit).toString())
+        document.getElementById('db-edit-btn')?.classList.toggle('toggle')
         setDbEdit(!dbEdit)
         setReload(true)
     }
@@ -318,22 +286,30 @@ export default function SkillList(props: any) {
                 localStorage.setItem('isEdit', 'false')
                 props.saveDatabase(skillList)
             }
+            if (dbPopup) {
+                toggleDbPopup()
+            }
             setReload(true)
         }
 
         function handleRemove(e: any) {
-            skillList.map((listSkill: any) => {
-                if (listSkill.id === skill.id) {
-                    mononoke.skills.splice(mononoke.skills.indexOf(listSkill), 1)
+            if (e.ctrlKey) {
+                skillList.map((listSkill: any) => {
+                    if (listSkill.id === skill.id) {
+                        mononoke.skills.splice(mononoke.skills.indexOf(listSkill), 1)
+                    }
+                })
+                setSkillList(skillList)
+                mononoke['skills'] = skillList
+                setMononoke(mononoke)
+                if (isDatabase) {
+                    props.saveDatabase(skillList)
                 }
-            })
-            setSkillList(skillList)
-            mononoke['skills'] = skillList
-            setMononoke(mononoke)
-            if (isDatabase) {
-                props.saveDatabase(skillList)
+                if (dbPopup) {
+                    toggleDbPopup()
+                }
+                setReload(true)
             }
-            setReload(true)
         }
 
         return (
@@ -344,7 +320,8 @@ export default function SkillList(props: any) {
                         props.isEditing || dbEdit ? (
                             <>
                                 <button className="edit-button" onClick={handleSave}><FloppyDisk /></button>
-                                <button className="edit-button" onClick={handleRemove}><Trash /></button>
+                                <button className="edit-button delete-talent" onClick={handleRemove}><Trash /></button>
+                                <span className='delete-talent-tooltip'>Ctrl + Click to Delete</span>
                             </>
                         ) : (<></>)
                     }
@@ -399,15 +376,52 @@ export default function SkillList(props: any) {
         )
     }
 
-    function DbPopup() {
+    function DbPopup(props: any) {
+
+        const dbSkills = props.dbSkills
+        const [filteredDbSkill, setFilteredDbSkill] = useState(
+            dbSkills.sort(function (a: any, b: any) {
+                let x = a.name.toLowerCase();
+                let y = b.name.toLowerCase();
+                if (x < y) { return -1; }
+                if (x > y) { return 1; }
+                return 0;
+            })
+        )
+
+        function filterDbSkill(e: any) {
+            const { name, value } = e.target
+
+            var sublist = []
+
+            dbSkills?.map((skill: any) => {
+                if (skill[name].toLowerCase().includes(value.toLowerCase())) {
+                    sublist.push(skill)
+                }
+            })
+            setFilteredDbSkill(sublist)
+        }
+
+        function handleAddExistingSkill(e: any, id: string) {
+            dbSkills.map((listSkill: any) => {
+                if (listSkill.id === id && mononoke.skills.find((skill: any) => skill.id === id) === undefined) {
+                    mononoke.skills.push(listSkill)
+                }
+            })
+            setMononoke(mononoke)
+            setSkillList(mononoke.skills)
+            toggleDbPopup()
+            setReload(true)
+        }
+
         return (
-            <div id={'skill-db-popup-' + mononoke.id} className="skill-db-popup hide">
+            <div id={'skill-db-popup-' + mononoke.id} className={"skill-db-popup " + (dbPopup ? '' : 'hide')}>
                 <div className="skill-db-popup-header">
                     <h4>Select from Database</h4>
-                    <button className="btn-popup-close" onClick={(e) => toggleDbPopup(e, mononoke.id)}><XmarkCircle width={18} /></button>
+                    <button className="btn-popup-close" onClick={toggleDbPopup}><XmarkCircle width={18} /></button>
                 </div>
                 <button onClick={(e) => addSkill(e)}>New Talent</button>
-                <input type="text" name="dbFilter" placeholder="filter (name)" onChange={(e) => filterDbSkill(e)} />
+                <input type="text" name="name" placeholder="filter (name)" onChange={(e) => filterDbSkill(e)} />
                 <div className="skill-db-popup-list">
                     {
                         filteredDbSkill?.filter((skill: any) => (mononoke.skills.find((mononokeSkill: any) => (mononokeSkill.id === skill.id))) === undefined).map((skill: any) => (
@@ -457,8 +471,9 @@ export default function SkillList(props: any) {
                 ) : (
                     <div className="db-header">
                         <button className="skill-add-btn" onClick={(e) => addSkill(e)}><PlusCircle /></button>
-                        <button className="skill-add-btn" onClick={handleDbEdit}>{!dbEdit ? (<EditPencil />) : (<XmarkCircle />)}</button>
-                        <button className='skill-add-btn import-skills' style={{ top: '-5.5px' }} onClick={importSkills}>Import Talents <span className='import-tooltip'>Imports Talents from every Mononoke's Talent list into the Database.</span></button>
+                        <button className="skill-add-btn" onClick={handleDbEdit} id="db-edit-btn" ><EditPencil /></button>
+                        <button className='skill-add-btn import-skills' style={{ top: '-5.5px' }} onClick={importSkills}>Import Talents </button>
+                        <span className='import-tooltip'>Imports Talents from every Mononoke's Talent list into the Database.</span>
                         <button className="skill-add-btn" onClick={() => collapseExpandAll(false)}><ExpandLines /></button>
                         <button className="skill-add-btn" onClick={() => collapseExpandAll(true)}><CompressLines /></button>
                     </div>
@@ -486,10 +501,10 @@ export default function SkillList(props: any) {
                     )
                 }
                 {!isDatabase && props.isEditing ? (
-                    <button className="create-new-skill" onClick={(e) => toggleDbPopup(e, mononoke.id)}>Add Talent</button>
+                    <button className="create-new-skill" onClick={toggleDbPopup}>Add Talent</button>
                 ) : (<></>)}
             </div>
-            <DbPopup />
+            {props.isEditing ? <DbPopup dbSkills={callDatabase()} /> : null}
         </div>
     )
 
